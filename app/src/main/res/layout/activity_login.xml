@@ -4,12 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-    <ProgressBar
-        android:id="@+id/reg_progress_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"/>
+    tools:context=".LoginActivity">
+
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_centerHorizontal="true"
@@ -22,58 +19,40 @@
             android:layout_marginRight="30dp"
             android:layout_marginBottom="0dp"
             android:inputType="textEmailAddress"
-            android:id="@+id/reg_user_email"
+            android:id="@+id/login_user_email"
             android:hint="Enter your email here"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/req_email_correct_format"
-            android:textColor="#ff0000"
-            android:textAlignment="center"
-            android:text="Please enter the email in correct format: someone@something.com"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            />
+
         <EditText
             android:padding="10dp"
             android:layout_margin="30dp"
 
             android:inputType="textPassword"
-            android:id="@+id/reg_user_password"
+            android:id="@+id/login_user_password"
             android:hint="Enter your password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <TextView
-            android:id="@+id/req_password_correct_format"
-            android:textColor="#ff0000"
-            android:textAlignment="center"
-            android:text="Password must be at least 8 characters"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="invisible" />
+
 
         <Button
-            android:id="@+id/reg_user_button"
+            android:id="@+id/login_user_button"
             android:layout_marginTop="50dp"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:padding="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Register user"/>
+            android:text="Login"/>
 
         <TextView
-            android:id="@+id/reg_sing_in_now"
+            android:id="@+id/login_sing_in_now"
             android:textAlignment="center"
-            android:text="Already have an account? Sign in now"
+            android:text="Don't have an account? Sign up now"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
     </LinearLayout>
-
-
-
 
 </RelativeLayout>
