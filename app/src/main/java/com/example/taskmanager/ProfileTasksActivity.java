@@ -5,6 +5,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.example.taskmanager.Adapters.ViewPagerAdapter;
@@ -15,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileTasksActivity extends AppCompatActivity implements ContactsFragment.OnFragmentInteractionListener, ProjectsFragment.OnFragmentInteractionListener {
 
+    public final String TAG = "ProfileTasksActivity";
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private TextView welcomeText;
@@ -38,6 +40,7 @@ public class ProfileTasksActivity extends AppCompatActivity implements ContactsF
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                Log.i(TAG, tab.getPosition() + "");
                 viewPager.setCurrentItem(tab.getPosition());
             }
 

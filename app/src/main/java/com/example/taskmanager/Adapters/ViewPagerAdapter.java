@@ -1,5 +1,7 @@
 package com.example.taskmanager.Adapters;
 
+import android.util.Log;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
@@ -16,6 +18,8 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        Log.i("ViewPageAdapter", position + "");
+        position = 0;
         switch (position){
             case 0:
                 return new ProjectsFragment();
@@ -24,6 +28,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
             default:
                 return null;
         }
+
     }
 
     @Override

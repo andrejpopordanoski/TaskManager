@@ -27,8 +27,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText loginPasswordText;
     private TextView loginSignUpText;
     private ProgressBar loginProgressBar;
-
-
     private FirebaseAuth firebaseAuth;
 
     @Override
@@ -43,7 +41,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginProgressBar = (ProgressBar) findViewById(R.id.login_progress_bar);
 
         firebaseAuth = FirebaseAuth.getInstance();
-
 
         loginButton.setOnClickListener(this);
         loginSignUpText.setOnClickListener(this);

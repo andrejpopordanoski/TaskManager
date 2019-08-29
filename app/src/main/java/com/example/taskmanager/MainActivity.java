@@ -34,11 +34,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText registerAddressText;
 
     private TextView registerSignInText;
-    private TextView registerEmailErrorText;
-    private TextView registerPasswordErrorText;
-    private TextView registerNameErrorText;
-    private TextView registerPhoneErrorText;
-    private TextView registerAddressErrorText;
 
     private ProgressBar registerProgressBar;
 
@@ -59,12 +54,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         registerAddressText = (EditText) findViewById(R.id.reg_user_address);
 
         registerSignInText = (TextView) findViewById(R.id.reg_sing_in_now);
-        registerEmailErrorText = (TextView) findViewById(R.id.req_email_correct_format);
-        registerPasswordErrorText = (TextView) findViewById(R.id.req_password_correct_format);
+
         registerProgressBar = (ProgressBar) findViewById(R.id.reg_progress_bar);
-        registerNameErrorText = (TextView) findViewById(R.id.req_name_correct_format);
-        registerPhoneErrorText = (TextView) findViewById(R.id.req_phone_correct_format);
-        registerAddressErrorText = (TextView) findViewById(R.id.req_address_correct_format);
 
 
 
@@ -86,39 +77,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         boolean emailOK = false, passwordOK = false, nameOK = false, phoneOK = false, addressOK = false;
         if (!email.contains("@") || !email.contains(".com") ) {
-            registerEmailErrorText.setVisibility(View.VISIBLE);
+//            registerEmailErrorText.setVisibility(View.VISIBLE);
+             registerEmailText.setError("Email empty or not in correct format!");
         }
+
         else {
-            registerEmailErrorText.setVisibility(View.INVISIBLE);
             emailOK = true;
         }
 
         if(password.length() < 8){
-            registerPasswordErrorText.setVisibility(View.VISIBLE);
+            registerPasswordText.setError("Password must be more than 8 characters");
         }
         else {
-            registerPasswordErrorText.setVisibility(View.INVISIBLE);
+
             passwordOK = true;
         }
         if(name.length() == 0){
-            registerNameErrorText.setVisibility(View.VISIBLE);
+            registerNameText.setError("Name must not be empty");
+
         }
         else {
-            registerNameErrorText.setVisibility(View.INVISIBLE);
             nameOK = true;
         }
         if(phone.length() == 0){
-            registerPhoneErrorText.setVisibility(View.VISIBLE);
+            registerPhoneText.setError("Phone must not be empty");
         }
         else {
-            registerPhoneErrorText.setVisibility(View.INVISIBLE);
+
             phoneOK = true;
         }
         if(address.length() == 0){
-            registerAddressErrorText.setVisibility(View.VISIBLE);
+            registerAddressText.setError("Address must not be empty");
         }
         else {
-            registerAddressErrorText.setVisibility(View.INVISIBLE);
+
             addressOK = true;
         }
 
@@ -162,18 +154,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     finish();
                     Log.i(TAG, task.toString() );
 //                    baseRef.setValue("users");
-                    User user = new User(firebaseAuth.getUid(), name, phone, address);
+                    User user = new User(email, name, phone, address);
                     String userUid = firebaseAuth.getUid();
                     Log.i(TAG, task.getResult().getUser().getUid());
 
 
-                    baseRootRef.child("users").child(email).setValue(user);
+                    baseRootRef.child("users").child(userUid).setValue(user);
 
                     startActivity(new Intent(getApplicationContext(), ProfileTasksActivity.class));
 
                 }
                 else {
-                    Toast.makeText(MainActivity.this, "Login failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     registerProgressBar.setVisibility(View.INVISIBLE);
                 }
             }

@@ -3,4 +3,15 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="project_name">Project name</string>
+    <string name="create_new_project">Create new project</string>
+    <string name="todo">TODO</string>
+
+    <string-array name="roles">
+        <item>Developer</item>
+        <item>Tester</item>
+        <item>Project Manager</item>
+
+    </string-array>
+
 </resources>
