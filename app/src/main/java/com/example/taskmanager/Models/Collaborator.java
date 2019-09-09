@@ -1,15 +1,14 @@
 package com.example.taskmanager.Models;
 
+import androidx.annotation.Nullable;
+
 import com.google.firebase.database.IgnoreExtraProperties;
 
-// enum collaboratorType  {
-//     Developer,
-//     Tester,
-//     Manager
-// }
+
 @IgnoreExtraProperties
 public class Collaborator {
-    public String id;
+
+    public String uId;
     public String collabType;
 
     public Collaborator() {
@@ -17,15 +16,21 @@ public class Collaborator {
     }
 
     public Collaborator(String id, String collabType) {
-        this.id = id;
+        this.uId = id;
         this.collabType = collabType;
     }
 
     public String getId() {
-        return id;
+        return uId;
     }
 
     public String getCollabType() {
         return collabType;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        Collaborator other = (Collaborator) obj;
+        return other.uId.equals(uId) && other.collabType.equals(collabType);
     }
 }

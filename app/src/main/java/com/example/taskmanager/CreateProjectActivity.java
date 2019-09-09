@@ -1,13 +1,12 @@
 package com.example.taskmanager;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Debug;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,14 +14,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.taskmanager.Classes.User;
+import com.example.taskmanager.Models.CollabType;
+import com.example.taskmanager.Models.User;
+import com.example.taskmanager.Models.UserProject;
 import com.example.taskmanager.Models.Collaborator;
 import com.example.taskmanager.Models.Project;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -35,15 +34,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-public class AddProjectActivity extends AppCompatActivity {
+public class CreateProjectActivity extends AppCompatActivity {
 
-    private final static String TAG = "AddProjectActivity";
+    private final static String TAG = "CreateProjectActivity";
     private FloatingActionButton fabAddProject;
     private Spinner roleSpinner;
     private EditText collaboratorEmail;
@@ -59,6 +55,7 @@ public class AddProjectActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseProjects;
 
     private List<Collaborator> collaborators;
+    private Intent parentIntent;
 
 
     @Override
@@ -69,13 +66,14 @@ public class AddProjectActivity extends AppCompatActivity {
         roleSpinner = (Spinner) findViewById(R.id.role_spinner);
         collaboratorEmail = (EditText) findViewById(R.id.collab_address);
         projectName = (EditText) findViewById(R.id.project_name);
-
         createProjectButton = (Button) findViewById(R.id.create_project_button);
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(AddProjectActivity.this,
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(CreateProjectActivity.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.roles));
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         roleSpinner.setAdapter(arrayAdapter);
+
+        parentIntent = getIntent();
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -86,7 +84,8 @@ public class AddProjectActivity extends AppCompatActivity {
         mDatabaseProjects = FirebaseDatabase.getInstance().getReference().child("projects");
 
         collaborators = new ArrayList<Collaborator>();
-
+        Collaborator currentUser = new Collaborator(mCurrentUser.getUid(), "Project Manager");
+        collaborators.add(currentUser);
 //        LayoutInflater inflater = getLayoutInflater();
 //        View v = inflater.inflate(R.layout.collaborator_view,  null);
 //        LinearLayout scrollView = (LinearLayout) findViewById(R.id.collaborators_wrap);
@@ -104,7 +103,7 @@ public class AddProjectActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(AddProjectActivity.this, "Clicks??", Toast.LENGTH_SHORT);
+                Toast.makeText(CreateProjectActivity.this, "Clicks??", Toast.LENGTH_SHORT);
 
                 addUserToView();
 
@@ -112,40 +111,66 @@ public class AddProjectActivity extends AppCompatActivity {
         });
     }
 
-    // CAN INSTAD DO THIS -----> https://stackoverflow.com/questions/37094631/get-the-pushed-id-for-specific-value-in-firebase-android
+    /**
+     * Button on click event calls this method
+     * It creates a project and pushes it into /projects of the firebase and then adds a UserProject to every collaborator with the project id
+     * Then re
+     */
     public void createProjectAndUpdateBase() {
-        final Project project = new Project(projectName.getText().toString(), collaborators);
 
-        Log.i(TAG,"We are here in this methodan");
-        for (Collaborator c:collaborators){
-            final DatabaseReference collabRef  = mDatabaseUsers.child(c.id);
+        if (!projectName.getText().toString().isEmpty()) {
+            final Project project = new Project(projectName.getText().toString(), collaborators);
+            final String projectKey = mDatabaseProjects.push().getKey();
+            mDatabaseProjects.child(projectKey).setValue(project);
 
-            final TextView random = (TextView) findViewById(R.id.some_random_textview);
-            Log.i(TAG,"We are here in the collabsand");
 
-            collabRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    User user = dataSnapshot.getValue(User.class);
-                    user.initializeProjectList();
-                    user.addProject(project);
-                    collabRef.setValue(user);
+            for (final Collaborator c : collaborators) {
+                final DatabaseReference collabRef = mDatabaseUsers.child(c.uId);
 
-//                    Log.i(TAG, u.toString());
-                }
+                final TextView random = (TextView) findViewById(R.id.some_random_textview);
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                }
-            });
+                collabRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        User user = dataSnapshot.getValue(User.class);
+                        UserProject userProject = new UserProject(projectKey, c.collabType);
+                        user.addProject(userProject);
+                        collabRef.setValue(user);
+                        Log.i(TAG, "Should have added the project to the user too");
+                        if (collaborators.indexOf(c) == collaborators.size() - 1){
+
+                            setResult(Activity.RESULT_OK, parentIntent);
+                            finish();
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+//            Intent intent = new Intent(this, ProfileProjectsMeetingsActivity.class);
+//            startActivity(intent);
+
+        }
+        else {
+            projectName.setError("Must not be left blank!");
         }
 
     }
 
+
+
     public void addUserToView() {
         final String collabEmail = collaboratorEmail.getText().toString();
         final String collabRole = roleSpinner.getSelectedItem().toString();
+
+
 
         if(collabEmail.length()> 0) {
             LayoutInflater inflater = getLayoutInflater();
@@ -188,7 +213,7 @@ public class AddProjectActivity extends AppCompatActivity {
                             collaborators.add(collab);
 
                             collaboratorEmail.setText("");
-                            hideKeyboard(AddProjectActivity.this);
+                            hideKeyboard(CreateProjectActivity.this);
                             roleSpinner.setSelection(0);
 
                             collabWrap.addView(view);
@@ -212,9 +237,11 @@ public class AddProjectActivity extends AppCompatActivity {
 
         }
         else {
-            Toast.makeText(AddProjectActivity.this, "Enter email in there", Toast.LENGTH_LONG);
+            Toast.makeText(CreateProjectActivity.this, "Enter email in there", Toast.LENGTH_LONG);
         }
     }
+
+
 
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);

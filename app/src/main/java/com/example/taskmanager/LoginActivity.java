@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Debug;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -70,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     finish();
                     Log.i(TAG, task.toString() );
 
-                    startActivity(new Intent(getApplicationContext(), ProfileTasksActivity.class));
+                    startActivity(new Intent(getApplicationContext(), ProfileProjectsMeetingsActivity.class));
 
                 }
                 else {

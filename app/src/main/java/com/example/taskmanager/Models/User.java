@@ -1,26 +1,46 @@
 package com.example.taskmanager.Models;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@IgnoreExtraProperties
 public class User {
-    String name;
-    String surname;
-    String email;
-    String password;
-    List<Project> projectList;
+    public String email;
+    public String name;
+    public String phone;
+    public  String address;
+    public List<UserProject> projectList;
+//    public ArrayList<String> someStrings = new ArrayList<String>(Arrays.asList("Hello", "Yes hello"));
+    public User() {
 
-    public  User(){}
-
-    public User(String name, String surname, String email, String password) {
-        this.name = name;
-        this.surname = surname;
+    }
+    public User(String email, String name, String phone, String address){
         this.email = email;
-        this.password = password;
-        projectList = new ArrayList<>();
+        this.name = name;
+        this.phone = phone;
+        this.address = address;
+        this.projectList = new ArrayList<UserProject>();
+
     }
 
-    public void addProject(Project p){
+    public void addProject(UserProject p){
+        if (projectList == null)
+            projectList = new ArrayList<>();
         projectList.add(p);
     }
+
+    public List<UserProject> getProjectList() {
+        if (projectList != null){
+            return projectList;
+        }
+        else return new ArrayList<UserProject>();
+    }
+
+    @Override
+    public String toString(){
+        return email + name + phone + address;
+    }
+
 }

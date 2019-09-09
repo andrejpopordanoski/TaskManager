@@ -1,19 +1,37 @@
 package com.example.taskmanager.Fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.taskmanager.AddProjectActivity;
+import com.example.taskmanager.Adapters.ProjectListAdapter;
+import com.example.taskmanager.CreateProjectActivity;
+import com.example.taskmanager.Models.Project;
+import com.example.taskmanager.Models.User;
+import com.example.taskmanager.Models.UserProject;
 import com.example.taskmanager.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +42,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
  * create an instance of this fragment.
  */
 public class ProjectsFragment extends Fragment {
+    private static final String TAG = "ProjectsFragment";
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -36,6 +55,16 @@ public class ProjectsFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private FloatingActionButton fabAddProject;
+    private RecyclerView recyclerView;
+
+    private FirebaseAuth mAuth;
+
+    private FirebaseUser mCurrentUser;
+
+    private DatabaseReference mDatabaseCurrentUser;
+    private DatabaseReference mDatabaseProjects;
+    private ArrayList<Project> userProjects;
+    ProjectListAdapter adapter;
 
     public ProjectsFragment() {
         // Required empty public constructor
@@ -61,6 +90,8 @@ public class ProjectsFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.i(TAG, "oncreate called");
+
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -68,6 +99,56 @@ public class ProjectsFragment extends Fragment {
         }
 
 
+        mAuth = FirebaseAuth.getInstance();
+        mCurrentUser = mAuth.getCurrentUser();
+        mDatabaseProjects = FirebaseDatabase.getInstance().getReference().child("projects");
+        mDatabaseCurrentUser = FirebaseDatabase.getInstance().getReference().child("users").child(mCurrentUser.getUid());
+        userProjects = new ArrayList<>();
+
+        getProjectsForCurrectUser();
+
+
+    }
+
+    private void getProjectsForCurrectUser() {
+        Log.i(TAG, "getProjectForCurrentUser called");
+        userProjects = new ArrayList<>();
+        mDatabaseCurrentUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                User currentUser = dataSnapshot.getValue(User.class);
+
+                for(UserProject up:currentUser.getProjectList()){
+                    DatabaseReference currProject = mDatabaseProjects.child(up.projectID);
+                    currProject.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Project project = dataSnapshot.getValue(Project.class);
+                            userProjects.add(project);
+                            Log.i(TAG, "adding projects" + project.name);
+                            setAdapter();
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+
+    public void setAdapter() {
+        adapter = new ProjectListAdapter(userProjects);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -76,14 +157,26 @@ public class ProjectsFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_projects, container, false);
+        recyclerView = (RecyclerView)  view.findViewById(R.id.recycler_view);
+        Log.i(TAG, "onCreateView called");
+        setAdapter();
+        recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
+
         fabAddProject = (FloatingActionButton) view.findViewById(R.id.fab_projects);
+
+        /**
+         *
+         */
+
         fabAddProject.setOnClickListener( new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Intent intent = new Intent(getContext(), AddProjectActivity.class);
-                startActivity(intent);
+                Intent intent = new Intent(getContext(), CreateProjectActivity.class);
+
+                Log.i(TAG, "STARTS FOR ACTIVITY");
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -105,6 +198,15 @@ public class ProjectsFragment extends Fragment {
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i(TAG, "onActivityResult" + (requestCode == Activity.RESULT_OK));
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK){
+            getProjectsForCurrectUser();
         }
     }
 

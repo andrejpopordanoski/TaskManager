@@ -9,9 +9,9 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import com.example.taskmanager.Fragments.ContactsFragment;
 import com.example.taskmanager.Fragments.ProjectsFragment;
 
-public class ViewPagerAdapter extends FragmentStatePagerAdapter {
+public class ProfileProjectMeetingsVPagerAdapter extends FragmentStatePagerAdapter {
     private int numberOfTabs;
-    public ViewPagerAdapter(FragmentManager fm, int numberOfTabs) {
+    public ProfileProjectMeetingsVPagerAdapter(FragmentManager fm, int numberOfTabs) {
         super(fm);
         this.numberOfTabs = numberOfTabs;
     }
@@ -19,7 +19,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Log.i("ViewPageAdapter", position + "");
-        position = 0;
+
         switch (position){
             case 0:
                 return new ProjectsFragment();

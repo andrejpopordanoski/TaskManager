@@ -1,22 +1,24 @@
 package com.example.taskmanager;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
-import com.example.taskmanager.Adapters.ViewPagerAdapter;
+import com.example.taskmanager.Adapters.ProfileProjectMeetingsVPagerAdapter;
 import com.example.taskmanager.Fragments.ContactsFragment;
 import com.example.taskmanager.Fragments.ProjectsFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class ProfileTasksActivity extends AppCompatActivity implements ContactsFragment.OnFragmentInteractionListener, ProjectsFragment.OnFragmentInteractionListener {
+public class ProfileProjectsMeetingsActivity extends AppCompatActivity implements ContactsFragment.OnFragmentInteractionListener, ProjectsFragment.OnFragmentInteractionListener {
 
-    public final String TAG = "ProfileTasksActivity";
+    public final String TAG = "ProfileProjectsMeetings";
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private TextView welcomeText;
@@ -33,7 +35,7 @@ public class ProfileTasksActivity extends AppCompatActivity implements ContactsF
         tabLayout.addTab(tabLayout.newTab().setText("Contacts"));
 //        tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
 
-        ViewPagerAdapter pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount() );
+        ProfileProjectMeetingsVPagerAdapter pagerAdapter = new ProfileProjectMeetingsVPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount() );
         viewPager.setAdapter(pagerAdapter );
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
@@ -60,6 +62,12 @@ public class ProfileTasksActivity extends AppCompatActivity implements ContactsF
 
 //        welcomeText.setText("Welcome " + firebaseAuth.getCurrentUser().getUid());
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i(TAG, "onActivityResult for parent");
     }
 
     @Override

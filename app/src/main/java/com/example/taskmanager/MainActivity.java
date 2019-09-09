@@ -3,10 +3,8 @@ package com.example.taskmanager;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Debug;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,7 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.taskmanager.Classes.User;
+import com.example.taskmanager.Models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -161,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     baseRootRef.child("users").child(userUid).setValue(user);
 
-                    startActivity(new Intent(getApplicationContext(), ProfileTasksActivity.class));
+                    startActivity(new Intent(getApplicationContext(), ProfileProjectsMeetingsActivity.class));
 
                 }
                 else {
