@@ -15,12 +15,12 @@ import com.example.taskmanager.R;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ContactsFragment.OnFragmentInteractionListener} interface
+ * {@link MeetingsFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ContactsFragment#newInstance} factory method to
+ * Use the {@link MeetingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ContactsFragment extends Fragment {
+public class MeetingsFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -32,7 +32,7 @@ public class ContactsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public ContactsFragment() {
+    public MeetingsFragment() {
         // Required empty public constructor
     }
 
@@ -42,11 +42,11 @@ public class ContactsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ContactsFragment.
+     * @return A new instance of fragment MeetingsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ContactsFragment newInstance(String param1, String param2) {
-        ContactsFragment fragment = new ContactsFragment();
+    public static MeetingsFragment newInstance(String param1, String param2) {
+        MeetingsFragment fragment = new MeetingsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

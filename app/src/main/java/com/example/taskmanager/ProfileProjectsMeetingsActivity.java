@@ -11,12 +11,12 @@ import android.util.Log;
 import android.widget.TextView;
 
 import com.example.taskmanager.Adapters.ProfileProjectMeetingsVPagerAdapter;
-import com.example.taskmanager.Fragments.ContactsFragment;
+import com.example.taskmanager.Fragments.MeetingsFragment;
 import com.example.taskmanager.Fragments.ProjectsFragment;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class ProfileProjectsMeetingsActivity extends AppCompatActivity implements ContactsFragment.OnFragmentInteractionListener, ProjectsFragment.OnFragmentInteractionListener {
+public class ProfileProjectsMeetingsActivity extends AppCompatActivity implements MeetingsFragment.OnFragmentInteractionListener, ProjectsFragment.OnFragmentInteractionListener {
 
     public final String TAG = "ProfileProjectsMeetings";
     private TabLayout tabLayout;

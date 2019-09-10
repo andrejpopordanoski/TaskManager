@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-import com.example.taskmanager.Fragments.ContactsFragment;
+import com.example.taskmanager.Fragments.MeetingsFragment;
 import com.example.taskmanager.Fragments.ProjectsFragment;
 
 public class ProfileProjectMeetingsVPagerAdapter extends FragmentStatePagerAdapter {
@@ -24,7 +24,7 @@ public class ProfileProjectMeetingsVPagerAdapter extends FragmentStatePagerAdapt
             case 0:
                 return new ProjectsFragment();
             case 1:
-                return new ContactsFragment();
+                return new MeetingsFragment();
             default:
                 return null;
         }
