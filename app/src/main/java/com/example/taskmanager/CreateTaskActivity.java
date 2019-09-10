@@ -41,6 +41,7 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
     private Spinner spinner;
     private LinearLayout dateHolder;
     private TextView dateTextView;
+    private TextView errorTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,8 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
         currentProject = getIntent().getParcelableExtra("currentProject");
         dateHolder = (LinearLayout) findViewById(R.id.date_holder);
         dateTextView = (TextView) findViewById(R.id.chosen_date);
-
+        errorTextView = (TextView) findViewById(R.id.error_textview);
+        errorTextView.setVisibility(View.INVISIBLE);
         dateHolder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,6 +94,14 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
         ArrayAdapter<Collaborator> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, collabs);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+
+        if(collabs.size() == 0) {
+            errorTextView.setVisibility(View.VISIBLE);
+            errorTextView.setText("There are no " + collabType + "s assigned to this project");
+        }
+        else {
+            errorTextView.setVisibility(View.INVISIBLE);
+        }
         spinner.setAdapter(adapter);
     }
 

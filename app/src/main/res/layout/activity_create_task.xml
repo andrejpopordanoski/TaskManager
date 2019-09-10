@@ -63,6 +63,14 @@
                         android:text="Assign to tester"
                         android:onClick="onRadioButtonClicked"/>
                 </RadioGroup>
+                <TextView
+                    android:id="@+id/error_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:textSize="15dp"
+                    android:text="No tester has been assigned to this project"
+                    android:textColor="#a23018" />
                 <Spinner
                     android:id="@+id/asignee_spinner"
                     android:layout_width="match_parent"
