@@ -84,7 +84,7 @@ public class CreateProjectActivity extends AppCompatActivity {
         mDatabaseProjects = FirebaseDatabase.getInstance().getReference().child("projects");
 
         collaborators = new ArrayList<Collaborator>();
-        Collaborator currentUser = new Collaborator(mCurrentUser.getUid(), "Project Manager");
+        Collaborator currentUser = new Collaborator(mCurrentUser.getUid(), "Project Manager", mCurrentUserEmail);
         collaborators.add(currentUser);
 //        LayoutInflater inflater = getLayoutInflater();
 //        View v = inflater.inflate(R.layout.collaborator_view,  null);
@@ -209,7 +209,7 @@ public class CreateProjectActivity extends AppCompatActivity {
                             role.setText(roleSpinner.getSelectedItem().toString());
 
 
-                            Collaborator collab = new Collaborator(userID, collabRole);
+                            Collaborator collab = new Collaborator(userID, collabRole, collabEmail);
                             collaborators.add(collab);
 
                             collaboratorEmail.setText("");

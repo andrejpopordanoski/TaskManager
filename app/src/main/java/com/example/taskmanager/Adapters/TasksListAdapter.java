@@ -24,14 +24,14 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.ViewHolder>{
-    private static final String TAG = "ProjectListAdapter";
+public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.ViewHolder>{
+    private static final String TAG = "TasksListAdapter";
     private List<Project> mProjectNames;
     private FirebaseAuth mAuth;
     private FirebaseUser mCurrentUser;
 //    private Context mContext;
 
-    public ProjectListAdapter(ArrayList<Project> mProjectNames) {
+    public TasksListAdapter(ArrayList<Project> mProjectNames) {
         this.mProjectNames = mProjectNames;
 //        this.mContext = mContext;
         mAuth = FirebaseAuth.getInstance();

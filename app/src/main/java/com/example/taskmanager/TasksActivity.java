@@ -9,13 +9,20 @@ import android.util.Log;
 
 import com.example.taskmanager.Adapters.ProfileProjectMeetingsVPagerAdapter;
 import com.example.taskmanager.Adapters.TasksVPAdapter;
+import com.example.taskmanager.Fragments.TasksDONEFragment;
+import com.example.taskmanager.Fragments.TasksTESTSFragment;
 import com.example.taskmanager.Fragments.TasksTODOFragment;
+import com.example.taskmanager.Models.Project;
 import com.google.android.material.tabs.TabLayout;
 
-public class TasksActivity extends AppCompatActivity implements TasksTODOFragment.OnFragmentInteractionListener {
+public class TasksActivity extends AppCompatActivity implements TasksTODOFragment.OnFragmentInteractionListener,
+        TasksDONEFragment.OnFragmentInteractionListener, TasksTESTSFragment.OnFragmentInteractionListener {
+
     private final String TAG = "TasksActivity";
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private Project currentProject;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,8 +34,11 @@ public class TasksActivity extends AppCompatActivity implements TasksTODOFragmen
         tabLayout.addTab(tabLayout.newTab().setText("TO DO"));
         tabLayout.addTab(tabLayout.newTab().setText("READY FOR TEST"));
         tabLayout.addTab(tabLayout.newTab().setText("DONE"));
+        currentProject = getIntent().getParcelableExtra("currentProject");
 
-        TasksVPAdapter pagerAdapter = new TasksVPAdapter(getSupportFragmentManager(), tabLayout.getTabCount() );
+        Log.i(TAG, currentProject.collaborators.toString());
+
+        TasksVPAdapter pagerAdapter = new TasksVPAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), currentProject );
         viewPager.setAdapter(pagerAdapter );
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 

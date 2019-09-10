@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.taskmanager.Models.Project;
 import com.example.taskmanager.R;
 
 /**
@@ -29,11 +30,15 @@ public class TasksTESTSFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Project currentProject;
 
     private OnFragmentInteractionListener mListener;
 
     public TasksTESTSFragment() {
         // Required empty public constructor
+    }
+    public TasksTESTSFragment(Project currentProject) {
+        this.currentProject = currentProject;
     }
 
     /**

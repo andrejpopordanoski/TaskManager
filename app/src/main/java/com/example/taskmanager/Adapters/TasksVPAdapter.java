@@ -9,14 +9,19 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.taskmanager.Fragments.ContactsFragment;
 import com.example.taskmanager.Fragments.ProjectsFragment;
+import com.example.taskmanager.Fragments.TasksDONEFragment;
+import com.example.taskmanager.Fragments.TasksTESTSFragment;
 import com.example.taskmanager.Fragments.TasksTODOFragment;
+import com.example.taskmanager.Models.Project;
 
 public class TasksVPAdapter extends FragmentStatePagerAdapter {
 
     private int numberOfTabs;
-    public TasksVPAdapter(FragmentManager fm, int numberOfTabs) {
+    private Project currentProject;
+    public TasksVPAdapter(FragmentManager fm, int numberOfTabs, Project currentProject) {
         super(fm);
         this.numberOfTabs = numberOfTabs;
+        this.currentProject = currentProject;
     }
 
     @Override
@@ -25,11 +30,11 @@ public class TasksVPAdapter extends FragmentStatePagerAdapter {
 
         switch (position){
             case 0:
-                return new TasksTODOFragment();
+                return new TasksTODOFragment(this.currentProject);
             case 1:
-                return new TasksTODOFragment();
+                return new TasksTESTSFragment(this.currentProject);
             case 2:
-                return new TasksTODOFragment();
+                return new TasksDONEFragment(this.currentProject);
             default:
                 return null;
         }
