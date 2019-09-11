@@ -144,7 +144,6 @@ public class CreateProjectActivity extends AppCompatActivity {
                             finish();
                         }
 
-
                     }
 
                     @Override

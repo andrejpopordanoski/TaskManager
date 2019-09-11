@@ -12,6 +12,7 @@ public class User {
     public String phone;
     public  String address;
     public List<UserProject> projectList;
+    public List<UserMeeting> meetingList;
 //    public ArrayList<String> someStrings = new ArrayList<String>(Arrays.asList("Hello", "Yes hello"));
     public User() {
 
@@ -22,6 +23,7 @@ public class User {
         this.phone = phone;
         this.address = address;
         this.projectList = new ArrayList<UserProject>();
+        this.meetingList = new ArrayList<>();
 
     }
 
@@ -29,6 +31,12 @@ public class User {
         if (projectList == null)
             projectList = new ArrayList<>();
         projectList.add(p);
+    }
+    public void addMeeting(UserMeeting meeting){
+        if (meetingList == null){
+            meetingList = new ArrayList<>();
+        }
+        meetingList.add(meeting);
     }
 
     public List<UserProject> getProjectList() {

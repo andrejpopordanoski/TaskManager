@@ -1,16 +1,23 @@
 package com.example.taskmanager.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.SearchView;
 
+import com.example.taskmanager.CreateMeetingActivity;
 import com.example.taskmanager.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +38,10 @@ public class MeetingsFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private Button addButton;
+    private RecyclerView recyclerView;
+    private FloatingActionButton floatingActionButton;
+
 
     public MeetingsFragment() {
         // Required empty public constructor
@@ -61,13 +72,36 @@ public class MeetingsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_contacts, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_meetings, container, false);
+        floatingActionButton = (FloatingActionButton)  view.findViewById(R.id.meetings_fab);
+        recyclerView = view.findViewById(R.id.recycler_view_meetings);
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent meetingIntent = new Intent(getContext(), CreateMeetingActivity.class);
+                // create onActivityResult logic
+                startActivityForResult(meetingIntent, 2);
+            }
+        });
+
+
+        return view;
+    }
+
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -94,6 +128,8 @@ public class MeetingsFragment extends Fragment {
         mListener = null;
     }
 
+
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -108,4 +144,6 @@ public class MeetingsFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 }

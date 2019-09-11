@@ -32,7 +32,7 @@ public class ProfileProjectsMeetingsActivity extends AppCompatActivity implement
         viewPager = (ViewPager)findViewById(R.id.profile_viewpager);
 
         tabLayout.addTab(tabLayout.newTab().setText("Projects"));
-        tabLayout.addTab(tabLayout.newTab().setText("Contacts"));
+        tabLayout.addTab(tabLayout.newTab().setText("Meetings"));
 //        tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
 
         ProfileProjectMeetingsVPagerAdapter pagerAdapter = new ProfileProjectMeetingsVPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount() );
