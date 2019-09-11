@@ -1,10 +1,12 @@
 package com.example.taskmanager.Fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,10 +14,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.taskmanager.Adapters.ProjectListAdapter;
+import com.example.taskmanager.Adapters.TasksListAdapter;
 import com.example.taskmanager.CreateTaskActivity;
 import com.example.taskmanager.Models.Project;
+import com.example.taskmanager.Models.Task;
 import com.example.taskmanager.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,9 +49,12 @@ public class TasksTODOFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private Project currentProject;
     private RecyclerView recyclerView;
+    private List<Task> taskList;
+    private DatabaseReference mDatabaseCurrentProject;
 
 
     private FloatingActionButton fab;
+    private TasksListAdapter adapter;
 
     public TasksTODOFragment() {
         // Required empty public constructor
@@ -48,6 +63,7 @@ public class TasksTODOFragment extends Fragment {
     public TasksTODOFragment(Project currentProject) {
 
         this.currentProject = currentProject;
+        mDatabaseCurrentProject = FirebaseDatabase.getInstance().getReference().child("projects").child(this.currentProject.projectId);
     }
 
     /**
@@ -75,6 +91,10 @@ public class TasksTODOFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        taskList = currentProject.getAllTasksFromState("TODO");
+
+        setAdapter();
     }
 
     @Override
@@ -141,5 +161,36 @@ public class TasksTODOFragment extends Fragment {
         Intent intent = new Intent(view.getContext(), CreateTaskActivity.class);
         startActivityForResult(intent, 2);
 
+    }
+
+    private void getTasksForCurrentUser (){
+        mDatabaseCurrentProject.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Project project = dataSnapshot.getValue(Project.class);
+                currentProject = project;
+                taskList = project.getAllTasksFromState("TODO");
+
+                setAdapter();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == Activity.RESULT_OK){
+            getTasksForCurrentUser();
+        }
+    }
+
+    public void setAdapter() {
+        adapter = new TasksListAdapter(taskList);
+        recyclerView.setAdapter(adapter);
     }
 }

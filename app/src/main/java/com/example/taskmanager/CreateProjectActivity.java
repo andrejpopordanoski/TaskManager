@@ -119,8 +119,9 @@ public class CreateProjectActivity extends AppCompatActivity {
     public void createProjectAndUpdateBase() {
 
         if (!projectName.getText().toString().isEmpty()) {
-            final Project project = new Project(projectName.getText().toString(), collaborators);
+
             final String projectKey = mDatabaseProjects.push().getKey();
+            final Project project = new Project(projectName.getText().toString(), projectKey, collaborators);
             mDatabaseProjects.child(projectKey).setValue(project);
 
 

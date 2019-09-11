@@ -90,7 +90,7 @@
                         android:completionThreshold="1"
                         android:hint="Task"
                         android:inputType="text"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorAccent"
                         android:textSize="20dp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -186,10 +186,13 @@
                         tools:ignore="ContentDescription" />
 
                     <LinearLayout
+                        android:id="@+id/priority_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:paddingLeft="10dp">
+                        android:paddingLeft="10dp"
+
+                        >
 
                         <TextView
                             android:layout_width="match_parent"
@@ -239,6 +242,7 @@
                         tools:ignore="ContentDescription" />
 
                     <LinearLayout
+                        android:id="@+id/description_holder"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
@@ -272,51 +276,7 @@
                     android:layout_marginRight="5dp"
                     android:background="#c0c0c0" />
 
-                <LinearLayout
-                    android:id="@+id/locationLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="15dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingTop="15dp">
 
-                    <ImageView
-                        android:id="@+id/locationIcon"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_gravity="center_vertical"
-                        android:elevation="4dp"
-                        android:src="@drawable/baseline_star_black_24dp"
-                        tools:ignore="ContentDescription" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingLeft="10dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:clickable="false"
-                            android:text="Location"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="25dp" />
-
-                        <TextView
-                            android:id="@+id/etLocation"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:clickable="false"
-                            android:hint="No location"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="20dp" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
 
             </LinearLayout>
 
