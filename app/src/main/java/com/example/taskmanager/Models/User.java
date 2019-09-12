@@ -39,6 +39,50 @@ public class User {
         meetingList.add(meeting);
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setProjectList(List<UserProject> projectList) {
+        this.projectList = projectList;
+    }
+
+    public List<UserMeeting> getMeetingList() {
+        return meetingList;
+    }
+
+    public void setMeetingList(List<UserMeeting> meetingList) {
+        this.meetingList = meetingList;
+    }
+
     public List<UserProject> getProjectList() {
         if (projectList != null){
             return projectList;

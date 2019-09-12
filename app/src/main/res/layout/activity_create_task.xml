@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/meeting_name"
+                        android:id="@+id/meeting_item_meeting_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="45dp"

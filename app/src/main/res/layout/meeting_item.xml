@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:id="@+id/meeting_item_parent_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,11 +30,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="vertical"
-                android:paddingLeft="10dp"
-                android:paddingStart="10dp">
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp">
 
                 <TextView
-                    android:id="@+id/meeting_name"
+                    android:id="@+id/meeting_item_meeting_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
@@ -42,7 +43,7 @@
                     android:textSize="25dp" />
 
                 <TextView
-                    android:id="@+id/meeting_date"
+                    android:id="@+id/meeting_item_meeting_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="true"
