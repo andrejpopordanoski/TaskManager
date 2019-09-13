@@ -1,4 +1,4 @@
-package com.example.taskmanager;
+package com.example.taskmanager.Activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,34 +8,40 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.example.taskmanager.Adapters.ProfileProjectMeetingsVPagerAdapter;
-import com.example.taskmanager.Fragments.MeetingsFragment;
-import com.example.taskmanager.Fragments.ProjectsFragment;
+import com.example.taskmanager.Adapters.TasksVPAdapter;
+import com.example.taskmanager.Fragments.TasksDONEFragment;
+import com.example.taskmanager.Fragments.TasksTESTSFragment;
+import com.example.taskmanager.Fragments.TasksTODOFragment;
+import com.example.taskmanager.Models.Project;
+import com.example.taskmanager.R;
 import com.google.android.material.tabs.TabLayout;
-import com.google.firebase.auth.FirebaseAuth;
 
-public class ProfileProjectsMeetingsActivity extends AppCompatActivity implements MeetingsFragment.OnFragmentInteractionListener, ProjectsFragment.OnFragmentInteractionListener {
+public class TasksActivity extends AppCompatActivity implements TasksTODOFragment.OnFragmentInteractionListener,
+        TasksDONEFragment.OnFragmentInteractionListener, TasksTESTSFragment.OnFragmentInteractionListener {
 
-    public final String TAG = "ProfileProjectsMeetings";
+    private final String TAG = "TasksActivity";
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private TextView welcomeText;
-    private FirebaseAuth firebaseAuth;
+    private Project currentProject;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_tasks);
+        setContentView(R.layout.activity_tasks);
 
         tabLayout = (TabLayout)findViewById(R.id.profile_tablayout);
         viewPager = (ViewPager)findViewById(R.id.profile_viewpager);
 
-        tabLayout.addTab(tabLayout.newTab().setText("Projects"));
-        tabLayout.addTab(tabLayout.newTab().setText("Contacts"));
-//        tabLayout.setTabGravity(TabLayout.GRAVITY_CENTER);
+        tabLayout.addTab(tabLayout.newTab().setText("TO DO"));
+        tabLayout.addTab(tabLayout.newTab().setText("READY FOR TEST"));
+        tabLayout.addTab(tabLayout.newTab().setText("DONE"));
+        currentProject = getIntent().getParcelableExtra("currentProject");
 
-        ProfileProjectMeetingsVPagerAdapter pagerAdapter = new ProfileProjectMeetingsVPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount() );
+        Log.i(TAG, currentProject.collaborators.toString());
+
+        TasksVPAdapter pagerAdapter = new TasksVPAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), currentProject );
         viewPager.setAdapter(pagerAdapter );
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
@@ -56,18 +62,6 @@ public class ProfileProjectsMeetingsActivity extends AppCompatActivity implement
 
             }
         });
-
-//        welcomeText = (TextView) findViewById(R.id.welcome_text);
-        firebaseAuth = FirebaseAuth.getInstance();
-
-//        welcomeText.setText("Welcome " + firebaseAuth.getCurrentUser().getUid());
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Log.i(TAG, "onActivityResult for parent");
     }
 
     @Override
@@ -76,7 +70,9 @@ public class ProfileProjectsMeetingsActivity extends AppCompatActivity implement
     }
 
     @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
+
+
 }

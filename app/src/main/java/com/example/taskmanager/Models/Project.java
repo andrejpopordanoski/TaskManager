@@ -109,10 +109,13 @@ public class Project implements Parcelable {
 
     public List<Task> getAllTasksFromState(String state){
         List<Task> tasks = new ArrayList<>();
-        for(Task t:this.tasks){
-            if(t.taskState.equals(state)){
-                tasks.add(t);
+        if(this.tasks != null) {
+            for (Task t : this.tasks) {
+                if (t.taskState.equals(state)) {
+                    tasks.add(t);
+                }
             }
+
         }
         return tasks;
     }

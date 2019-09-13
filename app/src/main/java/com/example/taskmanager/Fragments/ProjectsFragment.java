@@ -12,12 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.taskmanager.Activities.ProfileProjectsMeetingsActivity;
 import com.example.taskmanager.Adapters.ProjectListAdapter;
-import com.example.taskmanager.CreateProjectActivity;
+import com.example.taskmanager.Activities.CreateProjectActivity;
 import com.example.taskmanager.Models.Project;
 import com.example.taskmanager.Models.User;
 import com.example.taskmanager.Models.UserProject;
@@ -92,6 +94,7 @@ public class ProjectsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "oncreate called");
 
+
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -147,9 +150,14 @@ public class ProjectsFragment extends Fragment {
 
 
     public void setAdapter() {
-        adapter = new ProjectListAdapter(userProjects);
+
+        ProfileProjectsMeetingsActivity ppma = (ProfileProjectsMeetingsActivity) getActivity();
+        ppma.setAdapter(adapter);
+        adapter = new ProjectListAdapter(userProjects, this.getActivity());
         recyclerView.setAdapter(adapter);
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -167,6 +175,7 @@ public class ProjectsFragment extends Fragment {
         /**
          *
          */
+
 
         fabAddProject.setOnClickListener( new View.OnClickListener() {
 

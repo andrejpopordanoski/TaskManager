@@ -8,15 +8,16 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.taskmanager.Adapters.ProjectListAdapter;
 import com.example.taskmanager.Adapters.TasksListAdapter;
-import com.example.taskmanager.CreateTaskActivity;
+import com.example.taskmanager.Activities.CreateTaskActivity;
 import com.example.taskmanager.Models.Project;
 import com.example.taskmanager.Models.Task;
 import com.example.taskmanager.R;
@@ -94,7 +95,7 @@ public class TasksTODOFragment extends Fragment {
 
         taskList = currentProject.getAllTasksFromState("TODO");
 
-        setAdapter();
+
     }
 
     @Override
@@ -112,6 +113,11 @@ public class TasksTODOFragment extends Fragment {
                 startActivityForResult(intent, 2);
             }
         });
+
+
+        recyclerView = (RecyclerView) view.findViewById(R.id.tasks_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
+        setAdapter();
 
         return view;
     }
@@ -184,7 +190,10 @@ public class TasksTODOFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == Activity.RESULT_OK){
+        Log.i("TasksTODOFragment", "onActiviry result in fragment");
+        if(resultCode == Activity.RESULT_OK){
+            Log.i("TasksTODOFragment", "onActiviry result in fragment but in OK");
+
             getTasksForCurrentUser();
         }
     }

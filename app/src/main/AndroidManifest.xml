@@ -9,12 +9,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CreateTaskActivity"></activity>
-        <activity android:name=".TasksActivity" />
-        <activity android:name=".CreateProjectActivity" />
-        <activity android:name=".ProfileProjectsMeetingsActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activities.EditProjectInfoActivity"></activity>
+        <activity android:name=".Activities.CreateTaskActivity" />
+        <activity android:name=".Activities.TasksActivity" />
+        <activity android:name=".Activities.CreateProjectActivity" />
+        <activity android:name=".Activities.ProfileProjectsMeetingsActivity" />
+        <activity android:name=".Activities.LoginActivity" />
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

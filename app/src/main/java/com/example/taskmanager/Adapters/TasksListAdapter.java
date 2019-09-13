@@ -1,25 +1,17 @@
 package com.example.taskmanager.Adapters;
 
-import android.content.Context;
-import android.content.Intent;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.taskmanager.Models.Project;
 import com.example.taskmanager.Models.Task;
 import com.example.taskmanager.R;
-import com.example.taskmanager.TasksActivity;
-import com.google.android.gms.common.api.internal.TaskApiCall;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 

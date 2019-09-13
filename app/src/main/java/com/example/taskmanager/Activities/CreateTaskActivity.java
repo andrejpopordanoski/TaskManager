@@ -1,4 +1,4 @@
-package com.example.taskmanager;
+package com.example.taskmanager.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +24,7 @@ import com.example.taskmanager.Fragments.Dialogs.SingleChoiceDialog;
 import com.example.taskmanager.Models.Collaborator;
 import com.example.taskmanager.Models.Project;
 import com.example.taskmanager.Models.Task;
+import com.example.taskmanager.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;

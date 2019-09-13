@@ -1,7 +1,6 @@
-package com.example.taskmanager;
+package com.example.taskmanager.Activities;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -19,11 +18,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.taskmanager.Models.CollabType;
 import com.example.taskmanager.Models.User;
 import com.example.taskmanager.Models.UserProject;
 import com.example.taskmanager.Models.Collaborator;
 import com.example.taskmanager.Models.Project;
+import com.example.taskmanager.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -128,7 +127,7 @@ public class CreateProjectActivity extends AppCompatActivity {
             for (final Collaborator c : collaborators) {
                 final DatabaseReference collabRef = mDatabaseUsers.child(c.uId);
 
-                final TextView random = (TextView) findViewById(R.id.some_random_textview);
+
 
 
                 collabRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -183,7 +182,6 @@ public class CreateProjectActivity extends AppCompatActivity {
 
             final Query getUsersQuery = mDatabaseUsers.orderByChild("email").equalTo(collabEmail);
 
-            final TextView random = (TextView) findViewById(R.id.some_random_textview);
 
             getUsersQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                 String  s = "";
@@ -196,7 +194,6 @@ public class CreateProjectActivity extends AppCompatActivity {
                         String userID = "";
                         for(DataSnapshot childSnapshot:dataSnapshot.getChildren()){
                             userID = childSnapshot.getKey();
-//                            random.setText(childSnapshot.child("email").getValue().toString() + " " + mCurrentUserEmail );
                             if(mCurrentUserEmail.trim().equals(childSnapshot.child("email").getValue().toString().trim())) {
                                 isEmailOk = false;
                                 Toast.makeText(getBaseContext(), "You cannot add yourself as a collaborator", Toast.LENGTH_LONG).show();
