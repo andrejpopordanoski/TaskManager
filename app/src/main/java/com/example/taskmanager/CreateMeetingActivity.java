@@ -1,18 +1,22 @@
 package com.example.taskmanager;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.taskmanager.Models.Collaborator;
+import com.example.taskmanager.Fragments.DatePickerFragment;
 import com.example.taskmanager.Models.Meeting;
 import com.example.taskmanager.Models.MeetingAttendee;
 import com.example.taskmanager.Models.User;
@@ -27,23 +31,35 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
-public class CreateMeetingActivity extends AppCompatActivity {
+public class CreateMeetingActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+
     private EditText meetingName;
     private EditText location;
-    private EditText date;
     private EditText meetingDescription;
     private EditText agenda;
+    private String dateString="";
+    private String timeString="";
+    private LinearLayout dateLayout;
+    private LinearLayout timeLayout;
+    private TimePickerDialog picker;
+    private TextView selectedTime;
+    private TextView selectedDate;
+    private EditText attendeeEmail;
+    private FloatingActionButton addAttendeeFab;
     private List<MeetingAttendee> attendees;
     private Button createMeeting;
-    private FloatingActionButton addAttendeeFab;
-    private EditText attendeeEmail;
+
+
 
     //Firebase stuff
     private FirebaseDatabase firebaseDatabaseInstance;
@@ -57,7 +73,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
     private Intent parentIntent;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_meeting);
 
@@ -66,6 +82,40 @@ public class CreateMeetingActivity extends AppCompatActivity {
         parentIntent = getIntent();
 
         setUpFirebase();
+
+        dateLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment datePicker = new DatePickerFragment();
+
+                datePicker.show(getSupportFragmentManager(), "date picker");
+            }
+        });
+
+        timeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Calendar cldr = Calendar.getInstance();
+                int hour = cldr.get(Calendar.HOUR_OF_DAY);
+                int minutes = cldr.get(Calendar.MINUTE);
+                // time picker dialog
+                picker = new TimePickerDialog(CreateMeetingActivity.this,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker tp, int sHour, int sMinute) {
+                                if (timeString.equals("")){
+                                    timeString +=sHour + ":" + sMinute;
+                                    selectedTime.setText(timeString);
+                                }else {
+                                    timeString = "" + sHour + ":" + sMinute;
+                                    selectedTime.setText(timeString);
+                                }
+
+                            }
+                        }, hour, minutes, true);
+                picker.show();
+            }
+        });
 
         addAttendeeFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,7 +208,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
         if (checkIfFormIsValid()){
             //create new meeting and add it to database
             Meeting meeting = new Meeting(meetingName.getText().toString(),location.getText().toString()
-                    , meetingDescription.getText().toString(),agenda.getText().toString(),date.getText().toString());
+                    , meetingDescription.getText().toString(),agenda.getText().toString(),dateString + " " + timeString);
             final String meetingKey = dbReferenceMeetings.push().getKey();
             dbReferenceMeetings.child(meetingKey).setValue(meeting);
 
@@ -203,9 +253,13 @@ public class CreateMeetingActivity extends AppCompatActivity {
             validity = false;
             location.setError("Meeting must have a location");
         }
-        if (date.getText().toString().isEmpty()){
+        if (dateString.equals("")){
             validity = false;
-            date.setError("Meeting must have a date");
+            Toast.makeText(CreateMeetingActivity.this, "Meeting must have a date",Toast.LENGTH_SHORT).show();
+        }
+        if (timeString.equals("")){
+            validity = false;
+            Toast.makeText(CreateMeetingActivity.this, "Meeting must have a time set",Toast.LENGTH_SHORT).show();
         }
         if (meetingDescription.getText().toString().isEmpty()){
             validity = false;
@@ -224,12 +278,15 @@ public class CreateMeetingActivity extends AppCompatActivity {
     private void setUpViews(){
         meetingName =  findViewById(R.id.create_meeting_name);
         location =  findViewById(R.id.create_meeting_location);
-        date = findViewById(R.id.create_meeting_date);
         meetingDescription = findViewById(R.id.create_meeting_description);
         agenda = findViewById(R.id.create_meeting_agenda);
         createMeeting = findViewById(R.id.create_meeting_button);
         attendeeEmail = findViewById(R.id.create_meeting_collaborator_email);
         addAttendeeFab = findViewById(R.id.create_meeting_add_collaborator_fab);
+        dateLayout = findViewById(R.id.create_meeting_date_layout);
+        timeLayout = findViewById(R.id.create_meeting_time_layout);
+        selectedDate = findViewById(R.id.create_meeting_selected_date);
+        selectedTime = findViewById(R.id.create_meeting_selected_time);
 
     }
     /**
@@ -260,5 +317,22 @@ public class CreateMeetingActivity extends AppCompatActivity {
             view = new View(activity);
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        String currentDate = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
+        if(dateString.equals("")){
+            dateString += currentDate;
+            selectedDate.setText(dateString);
+        }else {
+            dateString = currentDate;
+            selectedDate.setText(dateString);
+        }
     }
 }

@@ -15,7 +15,8 @@ public class User {
     public List<UserMeeting> meetingList;
 //    public ArrayList<String> someStrings = new ArrayList<String>(Arrays.asList("Hello", "Yes hello"));
     public User() {
-
+        meetingList = new ArrayList<>();
+        projectList = new ArrayList<>();
     }
     public User(String email, String name, String phone, String address){
         this.email = email;
@@ -76,7 +77,10 @@ public class User {
     }
 
     public List<UserMeeting> getMeetingList() {
-        return meetingList;
+        if (meetingList != null)
+            return meetingList;
+        return new ArrayList<>();
+
     }
 
     public void setMeetingList(List<UserMeeting> meetingList) {

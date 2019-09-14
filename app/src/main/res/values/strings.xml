@@ -7,17 +7,23 @@
     <string name="create_new_project">Create new project</string>
     <string name="todo">TODO</string>
 
-    <string-array name="roles">
-        <item>Developer</item>
-        <item>Tester</item>
-        <item>Project Manager</item>
-
-    </string-array>
+    <string name="title_activity_detailed_meeting">DetailedMeetingActivity</string>
+    <string name="meeting_name">Meeting name</string>
+    <string name="meeting_date">Meeting date</string>
+    <string name="meeting_description">Meeting description</string>
+    <string name="meeting_agenda">Meeting agenda</string>
+    <string name="meeting_location">Meeting location</string>
 
     <string-array name="task_priorities">
         <item>Low</item>
         <item>Medium</item>
         <item>High</item>
+
+    </string-array>
+    <string-array name="roles">
+        <item>Developer</item>
+        <item>Tester</item>
+        <item>Project Manager</item>
 
     </string-array>
 

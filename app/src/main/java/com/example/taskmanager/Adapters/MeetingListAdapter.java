@@ -1,11 +1,14 @@
 package com.example.taskmanager.Adapters;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.taskmanager.DetailedMeetingActivity;
 import com.example.taskmanager.Models.Meeting;
 import com.example.taskmanager.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,11 +51,25 @@ public class MeetingListAdapter extends RecyclerView.Adapter<MeetingListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Meeting meeting = meetings.get(position);
+        final Meeting meeting = meetings.get(position);
 
         holder.meetingName.setText(meeting.getName());
         holder.meetingDate.setText(meeting.getTime());
 
+        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), DetailedMeetingActivity.class);
+
+                intent.putExtra("Meeting name", meeting.getName());
+                intent.putExtra("Meeting description", meeting.getDescription());
+                intent.putExtra("Meeting date", meeting.getTime());
+                intent.putExtra("Meeting agenda", meeting.getAgenda());
+                intent.putExtra("Meeting location", meeting.getLocation());
+                System.out.println("klikna na viewot");
+                view.getContext().startActivity(intent);
+            }
+        });
 
     }
 
@@ -64,7 +81,7 @@ public class MeetingListAdapter extends RecyclerView.Adapter<MeetingListAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView meetingName, meetingDate;
-        private LinearLayout parentLayout;
+        private RelativeLayout parentLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
