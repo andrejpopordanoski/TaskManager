@@ -58,6 +58,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements DatePick
     private FloatingActionButton addAttendeeFab;
     private List<MeetingAttendee> attendees;
     private Button createMeeting;
+    private LinearLayout addAttendee;
 
 
 
@@ -117,19 +118,21 @@ public class CreateMeetingActivity extends AppCompatActivity implements DatePick
             }
         });
 
-        addAttendeeFab.setOnClickListener(new View.OnClickListener() {
+
+        addAttendee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addMeetingAttendees();
             }
         });
-
         createMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 createMeetingAndUpdateDatabase();
             }
         });
+
+
 
 
 
@@ -284,11 +287,11 @@ public class CreateMeetingActivity extends AppCompatActivity implements DatePick
         agenda = findViewById(R.id.create_meeting_agenda);
         createMeeting = findViewById(R.id.create_meeting_button);
         attendeeEmail = findViewById(R.id.create_meeting_collaborator_email);
-        addAttendeeFab = findViewById(R.id.create_meeting_add_collaborator_fab);
         dateLayout = findViewById(R.id.create_meeting_date_layout);
         timeLayout = findViewById(R.id.create_meeting_time_layout);
         selectedDate = findViewById(R.id.create_meeting_selected_date);
         selectedTime = findViewById(R.id.create_meeting_selected_time);
+        addAttendee = findViewById(R.id.create_meeting_submit_attendee);
 
     }
     /**

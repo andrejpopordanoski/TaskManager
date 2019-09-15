@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView android:layout_height="match_parent"
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
     <LinearLayout
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -17,7 +19,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:background="@color/coolBlue"
+                android:textColorHint="@color/colorPrimary"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -38,7 +41,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:background="@color/coolBlue"
+                android:textColorHint="@color/colorPrimary"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -60,7 +64,8 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:background="@color/coolBlue"
+                android:textColorHint="@color/colorPrimary"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -82,43 +87,44 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:background="@color/coolBlue"
+                android:textColorHint="@color/colorPrimary"
                 >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/create_meeting_agenda"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:hint="Agenda"
                     android:inputType="text" />
 
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/create_meeting_date_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/button"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
+                android:background="@color/colorAccent"
                 android:clickable="false"
-                android:text="Select Date" />
+                android:layout_gravity="center"
+                android:text="Select Date"
+                android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
             <TextView
                 android:id="@+id/create_meeting_selected_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -126,25 +132,31 @@
             android:id="@+id/create_meeting_time_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
 
             <Button
                 android:id="@+id/button2"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/colorAccent"
                 android:clickable="false"
-                android:text="Select time" />
+                android:gravity="center"
+                android:text="Select time"
+                android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
             <TextView
                 android:id="@+id/create_meeting_selected_time"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_gravity="center"
+                android:textColor="@color/colorPrimary"
+                android:textSize="18sp" />
 
         </LinearLayout>
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout
@@ -158,8 +170,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="Collaborators:"
-                    android:textSize="20sp"/>
+                    android:text="Invite attendees:"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorAccent"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -170,7 +183,10 @@
                         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Collaborator email">
+                        android:hint="Attendee email"
+                        android:background="@color/coolBlue"
+                        android:textColorHint="@color/colorPrimary"
+                        >
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/create_meeting_collaborator_email"
@@ -179,33 +195,74 @@
                             android:inputType="text" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/create_meeting_card"
+                        android:layout_width="300dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="10dp"
+                        android:clickable="true"
+                        android:focusable="auto"
+                        android:foreground="?attr/selectableItemBackground"
+                        card_view:cardBackgroundColor="@color/colorAccent"
+                        card_view:cardUseCompatPadding="true">
+
+                        <LinearLayout
+                            android:id="@+id/create_meeting_submit_attendee"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:clickable="true"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:orientation="horizontal" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:clickable="false">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="match_parent"
+                                android:contentDescription="Save button"
+                                android:maxWidth="1dp"
+                                android:maxHeight="30dp"
+
+                                android:src="@drawable/baseline_person_add_white_18dp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:clickable="false"
+                                android:text="invite"
+                                android:textAlignment="center"
+                                android:textAllCaps="true"
+                                android:textColor="@color/common_google_signin_btn_text_dark_default"
+                                android:textSize="16sp"
+                                android:textStyle="bold">
+
+                            </TextView>
+                        </LinearLayout>
+
+
+                    </com.google.android.material.card.MaterialCardView>
+
 
                 </LinearLayout>
 
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/create_meeting_add_collaborator_fab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:layout_alignParentEnd="true"
-                    android:src="@drawable/ic_add_white_24dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_gravity="bottom|end" />
-
             </LinearLayout>
-        </ScrollView>
+        </LinearLayout>
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="161dp">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:id="@+id/create_meeting_attendees_wrap"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
             </LinearLayout>
         </ScrollView>
@@ -215,7 +272,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:text="Create meeting" />
+            android:text="Create meeting"
+            android:textColor="@color/common_google_signin_btn_text_dark_default"
+            android:background="@color/colorAccent"/>
 
     </LinearLayout>
 
