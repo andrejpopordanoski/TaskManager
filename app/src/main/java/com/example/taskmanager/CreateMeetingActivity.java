@@ -207,9 +207,11 @@ public class CreateMeetingActivity extends AppCompatActivity implements DatePick
 
         if (checkIfFormIsValid()){
             //create new meeting and add it to database
-            Meeting meeting = new Meeting(meetingName.getText().toString(),location.getText().toString()
-                    , meetingDescription.getText().toString(),agenda.getText().toString(),dateString + " " + timeString);
+
             final String meetingKey = dbReferenceMeetings.push().getKey();
+
+            Meeting meeting = new Meeting(meetingKey ,meetingName.getText().toString(),location.getText().toString()
+                    , meetingDescription.getText().toString(),agenda.getText().toString(),dateString + " " + timeString);
             dbReferenceMeetings.child(meetingKey).setValue(meeting);
 
             //create UserMeeting to store as a "relation" in users

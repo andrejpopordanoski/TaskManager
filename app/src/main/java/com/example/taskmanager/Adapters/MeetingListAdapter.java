@@ -66,7 +66,8 @@ public class MeetingListAdapter extends RecyclerView.Adapter<MeetingListAdapter.
                 intent.putExtra("Meeting date", meeting.getTime());
                 intent.putExtra("Meeting agenda", meeting.getAgenda());
                 intent.putExtra("Meeting location", meeting.getLocation());
-                System.out.println("klikna na viewot");
+                intent.putExtra("Meeting id",meeting.getId());
+                System.out.println("EVE KO CE KLIKNIS KOJ ID GO IMA" + meeting.getId());
                 view.getContext().startActivity(intent);
             }
         });

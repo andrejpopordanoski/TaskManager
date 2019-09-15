@@ -13,6 +13,8 @@
     <string name="meeting_description">Meeting description</string>
     <string name="meeting_agenda">Meeting agenda</string>
     <string name="meeting_location">Meeting location</string>
+    <string name="note_item_content">Content</string>
+    <string name="note_item_author">Author</string>
 
     <string-array name="task_priorities">
         <item>Low</item>
