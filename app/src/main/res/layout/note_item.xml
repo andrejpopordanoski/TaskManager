@@ -16,6 +16,7 @@
         card_view:cardCornerRadius="3dp"
         card_view:cardElevation="2dp"
         card_view:cardUseCompatPadding="true"
+        android:clickable="true"
 
         card_view:contentPadding="15dp">
 
@@ -29,6 +30,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorPrimaryDark"
+                android:drawableLeft="@drawable/person_18dp_black"
+                android:drawableTint="@color/colorPrimaryDark"
                 android:text="@string/note_item_author"
                 android:textSize="18sp"
                 android:layout_marginBottom="4dp"/>
