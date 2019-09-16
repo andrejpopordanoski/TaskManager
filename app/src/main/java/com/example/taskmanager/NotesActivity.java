@@ -67,6 +67,8 @@ public class NotesActivity extends AppCompatActivity {
     }
 
     private void getNotesFromDatabase() {
+        notes = null;
+        notes = new ArrayList<>();
         notesDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
