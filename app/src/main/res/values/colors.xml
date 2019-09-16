@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+
 
     <color name="highPriorityTask">#e91e63</color>
     <color name="mediumPriorityTask">#66bb6a</color>
     <color name="lowPriorityTask">#e2e619</color>
+
+
+    <color name="colorPrimary">#042f4b</color>
+    <color name="colorPrimaryDark">#001E25</color>
+    <color name="colorAccent">#AD003F</color>
+    <color name="cream">#fff6da</color>
+    <color name="skin">#fbc99d</color>
+    <color name="coolBlue">#FFFFFF</color>
 
 </resources>

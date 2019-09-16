@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Meeting {
+    private String id;
     private String name;
     private String location;
     private String description;
@@ -16,7 +17,7 @@ public class Meeting {
 
     public  Meeting(){}
 
-    public Meeting(String name, String location, String description, String agenda, String time) {
+    public Meeting(String id,String name, String location, String description, String agenda, String time) {
         this.name = name;
         this.location = location;
         this.description = description;
@@ -24,6 +25,15 @@ public class Meeting {
         this.notes = new ArrayList<>();
         this.time = time;
         this.users = new ArrayList<>();
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override

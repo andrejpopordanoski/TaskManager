@@ -15,10 +15,14 @@ public class User {
     public List<UserMeeting> meetingList;
 //    public ArrayList<String> someStrings = new ArrayList<String>(Arrays.asList("Hello", "Yes hello"));
     public User() {
+
         email = "default";
         name = "default";
         phone = "default";
         address = "default";
+
+        meetingList = new ArrayList<>();
+
         projectList = new ArrayList<>();
     }
     public User(String email, String name, String phone, String address){
@@ -80,7 +84,10 @@ public class User {
     }
 
     public List<UserMeeting> getMeetingList() {
-        return meetingList;
+        if (meetingList != null)
+            return meetingList;
+        return new ArrayList<>();
+
     }
 
     public void setMeetingList(List<UserMeeting> meetingList) {
