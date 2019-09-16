@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RadioButton;
 
 import com.example.taskmanager.Adapters.TasksListAdapter;
 import com.example.taskmanager.Activities.CreateTaskActivity;
@@ -22,6 +24,8 @@ import com.example.taskmanager.Models.Project;
 import com.example.taskmanager.Models.Task;
 import com.example.taskmanager.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,6 +56,12 @@ public class TasksTODOFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<Task> taskList;
     private DatabaseReference mDatabaseCurrentProject;
+    private FirebaseAuth mAuth;
+    private FirebaseUser mCurrentUser;
+    private Button allTasksButton;
+    private Button currentCollabButton;
+    private RadioButton allTasks;
+    private RadioButton yourTasks;
 
 
     private FloatingActionButton fab;
@@ -65,6 +75,20 @@ public class TasksTODOFragment extends Fragment {
 
         this.currentProject = currentProject;
         mDatabaseCurrentProject = FirebaseDatabase.getInstance().getReference().child("projects").child(this.currentProject.projectId);
+        mAuth = FirebaseAuth.getInstance();
+        mCurrentUser = mAuth.getCurrentUser();
+
+        mDatabaseCurrentProject.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                getTasksForCurrentUser();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     /**
@@ -96,6 +120,7 @@ public class TasksTODOFragment extends Fragment {
         taskList = currentProject.getAllTasksFromState("TODO");
 
 
+
     }
 
     @Override
@@ -103,6 +128,27 @@ public class TasksTODOFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_tasks_todo, container, false);
+
+//        allTasksButton = (Button) view.findViewById(R.id.all_tasks_button);
+//        currentCollabButton = (Button) view.findViewById(R.id.current_collab_button);
+
+        allTasks = (RadioButton) view.findViewById(R.id.all_tasks);
+        yourTasks = (RadioButton) view.findViewById(R.id.your_tasks);
+        allTasks.setChecked(true);
+
+        allTasks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRadioButtonClicked(v);
+            }
+        });
+        yourTasks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRadioButtonClicked(v);
+            }
+        });
+
         fab = (FloatingActionButton) view.findViewById(R.id.fab_new_task);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -194,12 +240,34 @@ public class TasksTODOFragment extends Fragment {
         if(resultCode == Activity.RESULT_OK){
             Log.i("TasksTODOFragment", "onActiviry result in fragment but in OK");
 
-            getTasksForCurrentUser();
+//            getTasksForCurrentUser();
         }
     }
 
     public void setAdapter() {
-        adapter = new TasksListAdapter(taskList);
+        adapter = new TasksListAdapter(taskList, currentProject);
         recyclerView.setAdapter(adapter);
+    }
+
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.all_tasks:
+                if (checked) {
+                    this.taskList = currentProject.getAllTasksFromState("TODO");
+                    setAdapter();
+                }
+
+                break;
+            case R.id.your_tasks:
+                if (checked) {
+                    this.taskList = currentProject.getAllTaksksFromStateAndCollaborator("TODO", mCurrentUser.getEmail());
+                    setAdapter();
+                }
+                break;
+        }
     }
 }

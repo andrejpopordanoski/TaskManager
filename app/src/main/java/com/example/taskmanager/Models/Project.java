@@ -13,7 +13,12 @@ public class Project implements Parcelable {
     public String projectId;
     public List<Collaborator> collaborators;
     public List<Task> tasks;
-    public  Project(){}
+    public  Project(){
+        name="Name-default";
+        projectId="defaultid";
+        collaborators = new ArrayList<>();
+        tasks = new ArrayList<>();
+    }
     public Project(String name, String projectId) {
         this.name = name;
         this.projectId = projectId;
@@ -119,6 +124,69 @@ public class Project implements Parcelable {
         }
         return tasks;
     }
+    public List<Task> getAllTaksksFromStateAndCollaborator(String state, String collabEmail){
+        List<Task> tasks = new ArrayList<>();
+        if(this.tasks != null) {
+            for (Task t : this.tasks) {
+                if (t.taskState.equals(state) && t.assignee.mail.equals(collabEmail)) {
+                    tasks.add(t);
+                }
+            }
+
+        }
+        return tasks;
+    }
+
+    public boolean deleteCollaboratorWithEmail(String email) {
+        boolean isDeleted = false;
+        for(Collaborator c:collaborators){
+            if(c.mail.equals(email)){
+                collaborators.remove(c);
+                isDeleted = true;
+                break;
+            }
+        }
+        return isDeleted;
+    }
+
+    public boolean deleteTaskForCollaborator(Collaborator collab){
+        for(Task t:tasks){
+            if(t.assignee.equals(collab)){
+                tasks.remove(t);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Task changeTaskState(Task task){
+        for(Task t:tasks){
+            if(t.equals(task)){
+                t.changeState();
+                return t;
+            }
+        }
+        return null;
+    }
+
+    public boolean setTaskInProgress(Task task){
+        for(Task t:tasks){
+            if(t.equals(task)){
+                t.inProgress = true;
+                return true;
+            }
+        }
+        return false;
+    }
 
 
+    public boolean removeTask(Task currentTask) {
+        for(Task t:tasks){
+            if(t.equals(currentTask)){
+                tasks.remove(t);
+                return true;
+            }
+        }
+        return false;
+    }
 }

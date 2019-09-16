@@ -66,6 +66,9 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
     private Intent parentIntent;
     private TextView errorTextView;
 
+    private RadioButton developer;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,6 +95,10 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
         priorityTextView = (TextView) findViewById(R.id.etPriority);
         descriptionTextView = (TextView) findViewById(R.id.etDescription);
         parentIntent = getIntent();
+
+        developer = (RadioButton) findViewById(R.id.developer);
+        developer.setChecked(true);
+
 
         mDatabaseCurrentProject = FirebaseDatabase.getInstance().getReference().child("projects").child(currentProject.projectId);
 
@@ -209,7 +216,7 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
             errorTextView.setText("There are no " + collabType + "s assigned to this project");
         }
         else {
-            errorTextView.setVisibility(View.INVISIBLE);
+            errorTextView.setVisibility(View.GONE);
         }
         spinner.setAdapter(adapter);
     }
@@ -228,6 +235,10 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
                 if (checked)
                     changeSpinnerOptions("Tester");
                     break;
+            case R.id.manager:
+                if (checked)
+                    changeSpinnerOptions("Project Manager");
+                break;
         }
     }
 

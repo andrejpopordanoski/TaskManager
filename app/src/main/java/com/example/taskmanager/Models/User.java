@@ -14,7 +14,11 @@ public class User {
     public List<UserProject> projectList;
 //    public ArrayList<String> someStrings = new ArrayList<String>(Arrays.asList("Hello", "Yes hello"));
     public User() {
-
+        email = "default";
+        name = "default";
+        phone = "default";
+        address = "default";
+        projectList = new ArrayList<>();
     }
     public User(String email, String name, String phone, String address){
         this.email = email;
@@ -36,6 +40,16 @@ public class User {
             return projectList;
         }
         else return new ArrayList<UserProject>();
+    }
+
+    public boolean removeUserProjectWithId(String id){
+        for(UserProject up:this.projectList){
+            if(up.projectID.equals(id)){
+                this.projectList.remove(up);
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

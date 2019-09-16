@@ -86,6 +86,11 @@ public class ProfileProjectsMeetingsActivity extends AppCompatActivity implement
         switch (item.getItemId()){
             case R.id.open_tasks:
                 adapter.openTask(item.getGroupId());
+                return true;
+            case R.id.edit_settings:
+                adapter.openEditActivity(item.getGroupId());
+                return true;
+
 
         }
         return true;

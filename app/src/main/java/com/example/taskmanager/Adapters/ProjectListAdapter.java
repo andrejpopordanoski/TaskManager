@@ -14,8 +14,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.taskmanager.Activities.EditProjectInfoActivity;
+import com.example.taskmanager.Fragments.ProjectsFragment;
 import com.example.taskmanager.Models.Project;
 import com.example.taskmanager.R;
 import com.example.taskmanager.Activities.TasksActivity;
@@ -31,14 +34,16 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
     private FirebaseAuth mAuth;
     private FirebaseUser mCurrentUser;
     private Activity parentActivity;
+    private ProjectsFragment projectsFragment;
 //    private Context mContext;
 
-    public ProjectListAdapter(ArrayList<Project> mProjectNames, Activity received) {
+    public ProjectListAdapter(ArrayList<Project> mProjectNames, Activity received, ProjectsFragment pf) {
         this.mProjectNames = mProjectNames;
 //        this.mContext = mContext;
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = mAuth.getCurrentUser();
         this.parentActivity = received;
+        this.projectsFragment = pf;
 
 
 
@@ -114,9 +119,16 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
 
         @Override
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            menu.setHeaderTitle("Choose an option:");
-            menu.add(this.getAdapterPosition(), R.id.open_tasks, 0, "Open tasks");
-            menu.add(this.getAdapterPosition(), R.id.edit_settings, 1, "Edit project settings");
+            ImageView star = (ImageView) v.findViewById(R.id.star);
+            if(star.getVisibility() == View.VISIBLE) {
+
+                menu.setHeaderTitle("Choose an option:");
+                menu.add(this.getAdapterPosition(), R.id.open_tasks, 0, "Open tasks");
+                menu.add(this.getAdapterPosition(), R.id.edit_settings, 1, "Edit project settings");
+            }
+            else {
+                menu.add(this.getAdapterPosition(), R.id.open_tasks, 0, "Open tasks");
+            }
         }
 
     }
@@ -126,5 +138,10 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         intent.putExtra("currentProject", mProjectNames.get(position));
 
         parentActivity.startActivity(intent);
+    }
+
+    public void openEditActivity(int position) {
+        projectsFragment.startEditSettingsActivity(mProjectNames.get(position));
+
     }
 }

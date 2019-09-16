@@ -3,6 +3,8 @@ package com.example.taskmanager.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.Nullable;
+
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -15,9 +17,20 @@ public class Task implements Parcelable {
     public Collaborator assignee;
     public String taskState;
     public String projectID;
+    public boolean inProgress;
+    public boolean testFailed;
 
 
     public Task() {
+        name = "default";
+        description = "default";
+        priority = "default";
+        esimateDateTo = new CustomDate();
+        assignee = new Collaborator();
+        taskState = "default";
+        projectID = "default";
+        inProgress = false;
+        testFailed = false;
     }
 
     public Task(String name, String description, String priority, Calendar esitmate, Collaborator assignee, String taskState, String projectID) {
@@ -29,7 +42,8 @@ public class Task implements Parcelable {
         this.assignee = assignee;
         this.taskState = taskState;
         this.projectID = projectID;
-
+        inProgress = false;
+        testFailed = false;
     }
 
 
@@ -41,6 +55,8 @@ public class Task implements Parcelable {
         assignee = in.readParcelable(Collaborator.class.getClassLoader());
         taskState = in.readString();
         projectID = in.readString();
+        inProgress = in.readByte() != 0;
+        testFailed = in.readByte() != 0;
     }
 
     public static final Creator<Task> CREATOR = new Creator<Task>() {
@@ -63,6 +79,34 @@ public class Task implements Parcelable {
         return esimateDateTo.toString();
     }
 
+
+
+    public void setInProgress() {
+        inProgress = true;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        Task other = (Task) obj;
+        return this.projectID.equals(other.projectID) && this.name.equals(other.name)  && this.description.equals(other.description) && this.getDateFormatted().equals(other.getDateFormatted());
+    }
+
+    public void changeState(){
+        if(this.taskState.equals("TODO")){
+            this.taskState = "TEST";
+            this.inProgress = false;
+        }
+        else if (this.taskState.equals("TEST")){
+            this.taskState = "DONE";
+            this.inProgress = false;
+
+        }
+        else {
+            this.taskState = "TODO";
+            this.inProgress = false;
+        }
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -77,5 +121,7 @@ public class Task implements Parcelable {
         dest.writeParcelable(assignee, flags);
         dest.writeString(taskState);
         dest.writeString(projectID);
+        dest.writeByte((byte) (inProgress ? 1 : 0));
+        dest.writeByte((byte) (testFailed ? 1 : 0));
     }
 }

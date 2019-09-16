@@ -9,11 +9,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +47,7 @@ public class CreateProjectActivity extends AppCompatActivity {
     private Spinner roleSpinner;
     private EditText collaboratorEmail;
     private EditText projectName;
+    private ProgressBar progressBar;
 
     private Button createProjectButton;
 
@@ -56,6 +61,8 @@ public class CreateProjectActivity extends AppCompatActivity {
     private List<Collaborator> collaborators;
     private Intent parentIntent;
 
+    private ImageButton newCollabButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +72,11 @@ public class CreateProjectActivity extends AppCompatActivity {
         roleSpinner = (Spinner) findViewById(R.id.role_spinner);
         collaboratorEmail = (EditText) findViewById(R.id.collab_address);
         projectName = (EditText) findViewById(R.id.project_name);
-        createProjectButton = (Button) findViewById(R.id.create_project_button);
+//        createProjectButton = (Button) findViewById(R.id.create_project_button);
+        newCollabButton = (ImageButton) findViewById(R.id.add_collab_button);
+        progressBar = (ProgressBar) findViewById(R.id.project_progress_bar);
+        progressBar.setVisibility(View.INVISIBLE);
+
 
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(CreateProjectActivity.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.roles));
@@ -90,24 +101,37 @@ public class CreateProjectActivity extends AppCompatActivity {
 //        LinearLayout scrollView = (LinearLayout) findViewById(R.id.collaborators_wrap);
 //        scrollView.addView(v, 1);
 
-        createProjectButton.setOnClickListener(new View.OnClickListener() {
+//        createProjectButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                createProjectAndUpdateBase();
+//            }
+//        });
+
+
+        newCollabButton.setOnClickListener( new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
-                createProjectAndUpdateBase();
-            }
-        });
 
-
-        fabAddProject.setOnClickListener( new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(CreateProjectActivity.this, "Clicks??", Toast.LENGTH_SHORT);
 
                 addUserToView();
 
             }
         });
+
+        fabAddProject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
+                fabAddProject.setEnabled(false);
+                createProjectAndUpdateBase();
+                progressBar.setVisibility(View.INVISIBLE);
+                fabAddProject.setEnabled(true);
+
+            }
+        });
+
     }
 
     /**
@@ -173,14 +197,33 @@ public class CreateProjectActivity extends AppCompatActivity {
 
 
         if(collabEmail.length()> 0) {
-            LayoutInflater inflater = getLayoutInflater();
+            final LayoutInflater inflater = getLayoutInflater();
             final View view = inflater.inflate(R.layout.collaborator_view, null);
+            final ImageView closeButton = view.findViewById(R.id.close_button);
+
+
+
             final LinearLayout collabWrap = (LinearLayout) findViewById(R.id.collaborators_wrap);
 
             final TextView email = view.findViewById(R.id.collab_email);
             final TextView role = view.findViewById(R.id.collab_role);
 
             final Query getUsersQuery = mDatabaseUsers.orderByChild("email").equalTo(collabEmail);
+
+
+            closeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TextView email = view.findViewById(R.id.collab_email);
+                    for(Collaborator c:collaborators){
+                        if(c.mail.equals(collabEmail.trim())){
+                            collaborators.remove(c);
+                            break;
+                        }
+                    }
+                    ((ViewManager) view.getParent()).removeView(view);
+                }
+            });
 
 
             getUsersQuery.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -201,6 +244,14 @@ public class CreateProjectActivity extends AppCompatActivity {
 
 
                         }
+
+                        for (Collaborator c:collaborators){
+                            if (c.mail.equals(collabEmail)){
+                                isEmailOk = false;
+                                Toast.makeText(getBaseContext(), "You have already added that collaborator", Toast.LENGTH_LONG).show();
+                            }
+                        }
+
 
                         if (isEmailOk) {
                             email.setText(collabEmail);

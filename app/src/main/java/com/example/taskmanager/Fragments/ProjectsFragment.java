@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.taskmanager.Activities.EditProjectInfoActivity;
 import com.example.taskmanager.Activities.ProfileProjectsMeetingsActivity;
 import com.example.taskmanager.Adapters.ProjectListAdapter;
 import com.example.taskmanager.Activities.CreateProjectActivity;
@@ -34,6 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,6 +69,10 @@ public class ProjectsFragment extends Fragment {
     private DatabaseReference mDatabaseProjects;
     private ArrayList<Project> userProjects;
     ProjectListAdapter adapter;
+
+    private List<View> projectManagerViews;
+
+    private boolean semaphore = true;
 
     public ProjectsFragment() {
         // Required empty public constructor
@@ -108,7 +114,36 @@ public class ProjectsFragment extends Fragment {
         mDatabaseCurrentUser = FirebaseDatabase.getInstance().getReference().child("users").child(mCurrentUser.getUid());
         userProjects = new ArrayList<>();
 
-        getProjectsForCurrectUser();
+//        getProjectsForCurrectUser();
+
+
+//        mDatabaseProjects.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                    getProjectsForCurrectUser();
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+
+        mDatabaseCurrentUser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                getProjectsForCurrectUser();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
     }
@@ -127,8 +162,10 @@ public class ProjectsFragment extends Fragment {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             Project project = dataSnapshot.getValue(Project.class);
-                            userProjects.add(project);
-                            Log.i(TAG, "adding projects" + project.name);
+                            if(project != null) {
+                                userProjects.add(project);
+                                Log.i(TAG, "adding projects" + project.name);
+                            }
                             setAdapter();
 
                         }
@@ -150,11 +187,12 @@ public class ProjectsFragment extends Fragment {
 
 
     public void setAdapter() {
-
+        Log.i(TAG, "Adapter is setting up, userprojects look like " + userProjects.toString());
         ProfileProjectsMeetingsActivity ppma = (ProfileProjectsMeetingsActivity) getActivity();
-        ppma.setAdapter(adapter);
-        adapter = new ProjectListAdapter(userProjects, this.getActivity());
+
+        adapter = new ProjectListAdapter(userProjects, this.getActivity(), this);
         recyclerView.setAdapter(adapter);
+        ppma.setAdapter(adapter);
     }
 
 
@@ -214,7 +252,7 @@ public class ProjectsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.i(TAG, "onActivityResult" + (requestCode == Activity.RESULT_OK));
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK){
+        if (resultCode == Activity.RESULT_OK && requestCode == 3){
             getProjectsForCurrectUser();
         }
     }
@@ -238,6 +276,12 @@ public class ProjectsFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public void startEditSettingsActivity(Project p) {
+        Intent intent = new Intent(getContext(), EditProjectInfoActivity.class);
+        intent.putExtra("currentProject", p);
+        startActivityForResult(intent, 3);
     }
 
 

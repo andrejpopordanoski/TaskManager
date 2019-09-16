@@ -3,4 +3,9 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="highPriorityTask">#e91e63</color>
+    <color name="mediumPriorityTask">#66bb6a</color>
+    <color name="lowPriorityTask">#e2e619</color>
+
 </resources>

@@ -47,26 +47,44 @@
 <!--                        android:textSize="20dp" />-->
 
 <!--                </com.google.android.material.textfield.TextInputLayout>-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Assign task to:"
+                    android:textSize="20dp"
+                    android:layout_gravity="center"
+                    >
 
+                </TextView>
                 <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+
+                    >
                     <RadioButton android:id="@+id/developer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Assign to developer"
+                        android:text="Developer"
                         android:onClick="onRadioButtonClicked"/>
                     <RadioButton android:id="@+id/tester"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Assign to tester"
+                        android:text="Tester"
+                        android:onClick="onRadioButtonClicked"/>
+                    <RadioButton android:id="@+id/manager"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Proect Manager"
                         android:onClick="onRadioButtonClicked"/>
                 </RadioGroup>
                 <TextView
                     android:id="@+id/error_textview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:paddingLeft="15dp"
                     android:textSize="15dp"
                     android:text="No tester has been assigned to this project"
@@ -289,7 +307,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:clickable="true"
-        android:src="@drawable/baseline_send_black_24dp"
+        android:src="@drawable/ic_send_black_24dp"
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom|right|end" />
 
