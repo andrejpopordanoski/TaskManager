@@ -1,4 +1,4 @@
-package com.example.taskmanager.Fragments;
+package com.example.taskmanager.Fragments.Dialogs;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

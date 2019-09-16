@@ -1,10 +1,12 @@
 package com.example.taskmanager.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,12 +14,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.taskmanager.Activities.EditProjectInfoActivity;
+import com.example.taskmanager.Fragments.ProjectsFragment;
 import com.example.taskmanager.Models.Project;
 import com.example.taskmanager.R;
-import com.example.taskmanager.TasksActivity;
-import com.google.android.gms.common.api.internal.TaskApiCall;
+import com.example.taskmanager.Activities.TasksActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -29,13 +33,21 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
     private List<Project> mProjectNames;
     private FirebaseAuth mAuth;
     private FirebaseUser mCurrentUser;
+    private Activity parentActivity;
+    private ProjectsFragment projectsFragment;
 //    private Context mContext;
 
-    public ProjectListAdapter(ArrayList<Project> mProjectNames) {
+    public ProjectListAdapter(ArrayList<Project> mProjectNames, Activity received, ProjectsFragment pf) {
         this.mProjectNames = mProjectNames;
 //        this.mContext = mContext;
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = mAuth.getCurrentUser();
+        this.parentActivity = received;
+        this.projectsFragment = pf;
+
+
+
+
     }
 
     public void setProjectList(ArrayList<Project> mProjectNames){
@@ -67,6 +79,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         }
 
 
+
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,12 +93,15 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
 
     }
 
+
+
+
     @Override
     public int getItemCount() {
         return mProjectNames.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
         TextView projectName;
         RelativeLayout parentLayout;
@@ -97,6 +113,35 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
             projectName = (TextView) itemView.findViewById(R.id.project_name);
             parentLayout = (RelativeLayout) itemView.findViewById(R.id.parent_layout);
             starImage = (ImageView) itemView.findViewById(R.id.star);
+
+            parentLayout.setOnCreateContextMenuListener(this);
         }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            ImageView star = (ImageView) v.findViewById(R.id.star);
+            if(star.getVisibility() == View.VISIBLE) {
+
+                menu.setHeaderTitle("Choose an option:");
+                menu.add(this.getAdapterPosition(), R.id.open_tasks, 0, "Open tasks");
+                menu.add(this.getAdapterPosition(), R.id.edit_settings, 1, "Edit project settings");
+            }
+            else {
+                menu.add(this.getAdapterPosition(), R.id.open_tasks, 0, "Open tasks");
+            }
+        }
+
+    }
+
+    public void openTask(int position){
+        Intent intent = new Intent(parentActivity, TasksActivity.class);
+        intent.putExtra("currentProject", mProjectNames.get(position));
+
+        parentActivity.startActivity(intent);
+    }
+
+    public void openEditActivity(int position) {
+        projectsFragment.startEditSettingsActivity(mProjectNames.get(position));
+
     }
 }

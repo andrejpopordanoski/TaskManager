@@ -9,15 +9,16 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".CreateTaskActivity"></activity>
-        <activity android:name=".TasksActivity" />
-        <activity android:name=".CreateProjectActivity" />
-        <activity android:name=".ProfileProjectsMeetingsActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".CreateMeetingActivity"/>
-        <activity android:name=".MainActivity">
+        android:theme="@style/AppTheme">
+        <activity android:name=".Activities.TaskDetails"></activity>
+        <activity android:name=".Activities.EditProjectInfoActivity" />
+        <activity android:name=".Activities.CreateTaskActivity" />
+        <activity android:name=".Activities.TasksActivity" />
+        <activity android:name=".Activities.CreateProjectActivity" />
+        <activity android:name=".Activities.ProfileProjectsMeetingsActivity" />
+        <activity android:name=".Activities.LoginActivity" />
+        <activity android:name=".Activities.MainActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,7 +26,9 @@
             </intent-filter>
         </activity>
     </application>
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
 </manifest>
