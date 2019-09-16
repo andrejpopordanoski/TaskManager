@@ -16,7 +16,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.taskmanager.Fragments.DatePickerFragment;
+import com.example.taskmanager.Fragments.Dialogs.DatePickerFragment;
 import com.example.taskmanager.Models.Meeting;
 import com.example.taskmanager.Models.MeetingAttendee;
 import com.example.taskmanager.Models.User;
