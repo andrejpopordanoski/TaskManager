@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/backgrounds"
     tools:context=".Fragments.TasksTODOFragment">
 
     <LinearLayout
@@ -15,12 +16,15 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:orientation="horizontal"
             android:gravity="center"
+
+            android:background="@color/colorPrimaryDark"
             >
 
             <RadioGroup
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -30,11 +34,17 @@
                 <RadioButton android:id="@+id/all_tasks"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:buttonTint="#ffff"
+                    android:textColor="#ffffff"
+                    android:padding="10dp"
                     android:text="All tasks"
                     />
                 <RadioButton android:id="@+id/your_tasks"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:buttonTint="#ffff"
+                    android:textColor="#ffffff"
+                    android:padding="10dp"
                     android:text="Your tasks"
                     />
             </RadioGroup>
@@ -47,6 +57,42 @@
             >
 
         </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/no_tasks_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+
+        android:visibility="gone"
+        >
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/tasks"
+            >
+
+        </ImageView>
+        <TextView
+            android:textAlignment="center"
+            android:layout_marginTop="10dp"
+            android:layout_width="250dp"
+            android:textStyle="bold"
+            android:textSize="@dimen/medium_txt_size"
+            android:lines="1"
+            android:text="No tasks in here!"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:textAlignment="center"
+            android:layout_width="250dp"
+            android:lines="3"
+            android:text="You dont have any tasks in this view! Click the add button to create a new task!"
+            android:layout_height="wrap_content">
+
+        </TextView>
 
     </LinearLayout>
 

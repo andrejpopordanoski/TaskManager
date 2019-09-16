@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 
 import com.example.taskmanager.Adapters.TasksListAdapter;
@@ -62,6 +63,8 @@ public class TasksTODOFragment extends Fragment {
     private Button currentCollabButton;
     private RadioButton allTasks;
     private RadioButton yourTasks;
+
+    private LinearLayout noTasksLayout;
 
 
     private FloatingActionButton fab;
@@ -150,6 +153,8 @@ public class TasksTODOFragment extends Fragment {
         });
 
         fab = (FloatingActionButton) view.findViewById(R.id.fab_new_task);
+
+        noTasksLayout = (LinearLayout) view.findViewById(R.id.no_tasks_layout);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -245,6 +250,12 @@ public class TasksTODOFragment extends Fragment {
     }
 
     public void setAdapter() {
+        if(taskList.size() == 0 ){
+            noTasksLayout.setVisibility(View.VISIBLE);
+        }
+        else {
+            noTasksLayout.setVisibility(View.GONE);
+        }
         adapter = new TasksListAdapter(taskList, currentProject);
         recyclerView.setAdapter(adapter);
     }

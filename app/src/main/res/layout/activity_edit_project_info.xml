@@ -21,32 +21,37 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             >
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:gravity="center"
+                android:layout_height="80dp"
+                android:background="@color/colorPrimary"
 
-                android:background="#4E4288"
-                >
+                android:gravity="center">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Edit project settings"
 
-                    android:textColor="#ffffff"
-                    android:textSize="25dp"
                     android:textAlignment="center"
-                    android:layout_marginTop="10dp"
-                    />
+                    android:textColor="#ffffff"
+                    android:textSize="25dp" />
 
             </LinearLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:elevation="2dp"
+                android:background="#c0c0c0" />
+
             <LinearLayout
                 android:id="@+id/wrap"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingBottom="40dp"
-                android:background="#F6F6F6"
+                android:background="@color/backgrounds"
                 >
                 <LinearLayout
                     android:id="@+id/new_project_wrapper"
@@ -61,7 +66,7 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense"
-                        app:boxBackgroundColor="#F6F6F6"
+                        app:boxBackgroundColor="@color/backgrounds"
                         android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
@@ -89,8 +94,14 @@
 
 
             </LinearLayout>
-
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:elevation="2dp"
+                android:background="#c0c0c0" />
             <ScrollView
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <LinearLayout
@@ -114,6 +125,7 @@
 
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -124,40 +136,48 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
-                            android:orientation="horizontal">
-                            <!--<ImageView-->
-                            <!--android:layout_width="40dp"-->
-                            <!--android:layout_height="40dp"-->
-                            <!--android:layout_marginTop="15dp"-->
-                            <!--android:layout_marginRight="15dp"-->
-                            <!--android:src="@drawable/ic_event_note_black_24dp" />-->
+                            android:orientation="horizontal"
+                            >
 
-
-                            <Spinner
-                                android:id="@+id/role_spinner"
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:orientation="vertical">
+                                <!--<ImageView-->
+                                <!--android:layout_width="40dp"-->
+                                <!--android:layout_height="40dp"-->
+                                <!--android:layout_marginTop="15dp"-->
+                                <!--android:layout_marginRight="15dp"-->
+                                <!--android:src="@drawable/ic_event_note_black_24dp" />-->
 
-                                >
+                                <Spinner
 
-                            </Spinner>
+                                    android:id="@+id/role_spinner"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content">
 
-                            <com.google.android.material.textfield.TextInputLayout
-                                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:layout_gravity="center"
-                                android:hint="Collaborator email"
-                                app:boxBackgroundColor="#ffffff">
+                                </Spinner>
 
-                                <com.google.android.material.textfield.TextInputEditText
-                                    android:id="@+id/collab_address"
-                                    android:layout_width="287dp"
+                                <com.google.android.material.textfield.TextInputLayout
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                                    android:layout_width="300dp"
                                     android:layout_height="wrap_content"
-                                    android:inputType="text" />
-                            </com.google.android.material.textfield.TextInputLayout>
+                                    android:layout_weight="1"
+                                    android:hint="Collaborator email"
+                                    app:boxBackgroundColor="#ffff">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:id="@+id/collab_address"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="text" />
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                            </LinearLayout>
+
+
+
                             <ImageButton
                                 android:id="@+id/add_collab_button"
                                 android:layout_width="50dp"
@@ -200,7 +220,8 @@
             android:id="@+id/save_changes_button"
             android:layout_width="match_parent"
             android:layout_margin="10dp"
-            android:background="#B586D9"
+            android:textColor="#ffff"
+            android:background="@color/colorAccent"
             android:layout_height="wrap_content"
             android:padding="15dp"
             android:text="SAVE CHANGES"

@@ -15,101 +15,157 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusableInTouchMode="true"
+
             >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:background="@color/colorPrimaryDark"
+                android:elevation="10dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Create new task"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/large_txt_size"
+
+                    ></TextView>
 
 
+            </LinearLayout>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="3dp"
+                android:elevation="3dp"
+                android:background="#c0c0c0" />
 
             <LinearLayout
                 android:id="@+id/RequiredInfoLayout"
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
+                android:layout_height="match_parent"
                 android:layout_below="@+id/appbar"
-                android:background="@color/colorPrimary"
+                android:background="@color/cream"
                 android:orientation="vertical"
-                android:paddingTop="15dp">
+                android:paddingBottom="30dp"
+                android:paddingLeft="40dp"
 
-<!--                <com.google.android.material.textfield.TextInputLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content">-->
+                >
 
-<!--                    <com.google.android.material.textfield.TextInputEditText-->
-<!--                        android:id="@+id/asignee-mail"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginEnd="45dp"-->
-<!--                        android:layout_marginLeft="45dp"-->
-<!--                        android:layout_marginRight="45dp"-->
-<!--                        android:layout_marginStart="45dp"-->
-<!--                        android:completionThreshold="1"-->
-<!--                        android:hint="Asignee"-->
-<!--                        android:inputType="text"-->
-<!--                        android:textColor="@color/colorPrimary"-->
-<!--                        android:textSize="20dp" />-->
+                <!--                <com.google.android.material.textfield.TextInputLayout-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_height="wrap_content">-->
 
-<!--                </com.google.android.material.textfield.TextInputLayout>-->
+                <!--                    <com.google.android.material.textfield.TextInputEditText-->
+                <!--                        android:id="@+id/asignee-mail"-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_marginEnd="45dp"-->
+                <!--                        android:layout_marginLeft="45dp"-->
+                <!--                        android:layout_marginRight="45dp"-->
+                <!--                        android:layout_marginStart="45dp"-->
+                <!--                        android:completionThreshold="1"-->
+                <!--                        android:hint="Asignee"-->
+                <!--                        android:inputType="text"-->
+                <!--                        android:textColor="@color/colorPrimary"-->
+                <!--                        android:textSize="20dp" />-->
+
+                <!--                </com.google.android.material.textfield.TextInputLayout>-->
+
+
+
                 <TextView
+                    android:layout_marginTop="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Assign task to:"
-                    android:textSize="20dp"
-                    android:layout_gravity="center"
-                    >
+                    android:paddingLeft="5dp"
+                    android:textStyle="bold"
+                    android:text="Choose role of the asignee:"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="@dimen/small_txt_size">
 
                 </TextView>
-                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+
                     android:orientation="horizontal"
-                    android:layout_gravity="center"
-                    android:gravity="center"
 
                     >
-                    <RadioButton android:id="@+id/developer"
+
+                    <RadioButton
+                        android:id="@+id/developer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:buttonTint="@color/colorPrimaryDark"
+                        android:onClick="onRadioButtonClicked"
+                        android:padding="5dp"
                         android:text="Developer"
-                        android:onClick="onRadioButtonClicked"/>
-                    <RadioButton android:id="@+id/tester"
+                        android:textColor="@color/colorPrimaryDark" />
+
+                    <RadioButton
+                        android:id="@+id/tester"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:buttonTint="@color/colorPrimaryDark"
+
+                        android:onClick="onRadioButtonClicked"
+                        android:padding="5dp"
                         android:text="Tester"
-                        android:onClick="onRadioButtonClicked"/>
-                    <RadioButton android:id="@+id/manager"
+                        android:textColor="@color/colorPrimaryDark" />
+
+                    <RadioButton
+                        android:id="@+id/manager"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Proect Manager"
-                        android:onClick="onRadioButtonClicked"/>
+                        android:buttonTint="@color/colorPrimaryDark"
+
+                        android:onClick="onRadioButtonClicked"
+                        android:padding="5dp"
+                        android:text="Project Manager"
+                        android:textColor="@color/colorPrimaryDark" />
                 </RadioGroup>
+
+                <Spinner
+                    android:id="@+id/asignee_spinner"
+
+                    android:layout_width="330dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorPrimary"
+                    />
+
                 <TextView
                     android:id="@+id/error_textview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:textStyle="bold"
                     android:paddingLeft="15dp"
-                    android:textSize="15dp"
                     android:text="No tester has been assigned to this project"
-                    android:textColor="#a23018" />
-                <Spinner
-                    android:id="@+id/asignee_spinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:textColor="#a23018"
+                    android:textSize="15dp" />
+
+
+
                 <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_width="330dp"
+                    android:layout_height="wrap_content"
+
+                    android:gravity="center"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/meeting_item_meeting_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="45dp"
-                        android:layout_marginLeft="45dp"
-                        android:layout_marginRight="45dp"
-                        android:layout_marginStart="45dp"
                         android:completionThreshold="1"
-                        android:hint="Task"
+                        android:hint="Task name"
                         android:inputType="text"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="20dp" />
+                        android:textColor="@color/colorPrimaryDark"
+                        android:textColorHint="@color/thumbColor"/>
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -122,7 +178,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/appbar"
-            android:background="@color/cardview_dark_background">
+            android:background="@color/backgrounds">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -170,7 +226,7 @@
                             android:layout_height="wrap_content"
                             android:clickable="false"
                             android:hint="Today"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorAccent"
                             android:textSize="15dp" />
 
                     </LinearLayout>
@@ -226,7 +282,7 @@
                             android:layout_height="wrap_content"
                             android:clickable="false"
                             android:hint="Medium"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorAccent"
                             android:textSize="15dp" />
 
                     </LinearLayout>
@@ -280,7 +336,7 @@
                             android:layout_height="wrap_content"
                             android:clickable="false"
                             android:hint="No description"
-                            android:textColor="@color/colorPrimary"
+                            android:textColor="@color/colorAccent"
                             android:textSize="20dp" />
 
                     </LinearLayout>

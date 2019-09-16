@@ -1,58 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/parent_layout"
     >
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:background="#2FB2ACF0"
-        android:padding="10dp">
+        android:background="@color/backgrounds"
+        android:padding="10dp"
+        android:gravity="center"
+        android:foregroundGravity="center"
+        >
+
         <ImageView
+
             android:layout_width="60dp"
             android:layout_height="50dp"
             android:src="@drawable/ic_receipt_black_24dp"
             ></ImageView>
 
-        <TextView
-            android:id="@+id/project_name"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical"
+            android:layout_gravity="top"
             android:layout_weight="1"
-            android:text="Maserati"
-            android:textColor="#D81B60"
-            android:textSize="30dp"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Project name:"
+                android:textColor="@color/colorAccent"
+                android:textSize="@dimen/small_txt_size"
 
-            ></TextView>
+                ></TextView>
+            <TextView
+
+                android:id="@+id/project_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:text="Maserati"
+                android:textStyle="bold"
+                android:textSize="@dimen/medium_txt_size"
+
+                ></TextView>
+
+        </LinearLayout>
+
 
         <ImageView
             android:id="@+id/star"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
-            android:layout_marginEnd="25dp"
+
 
 
             android:src="@drawable/ic_stars_black_24dp" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_more_vert_black_24dp"
-            android:background="@drawable/background_transparent"
-            android:contentDescription="more"
-            android:layout_alignParentRight="true"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/ic_more_vert_black_24dp"
+
              />
 
 
 
-    </RelativeLayout>
 
 
 
-</RelativeLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="#c0c0c0" />
+
+
+
+</LinearLayout>

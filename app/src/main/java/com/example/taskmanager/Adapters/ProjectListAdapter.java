@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -104,14 +105,14 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
         TextView projectName;
-        RelativeLayout parentLayout;
+        LinearLayout parentLayout;
         ImageView starImage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             projectName = (TextView) itemView.findViewById(R.id.project_name);
-            parentLayout = (RelativeLayout) itemView.findViewById(R.id.parent_layout);
+            parentLayout = (LinearLayout) itemView.findViewById(R.id.parent_layout);
             starImage = (ImageView) itemView.findViewById(R.id.star);
 
             parentLayout.setOnCreateContextMenuListener(this);
