@@ -126,6 +126,7 @@ public class CreateMeetingActivity extends AppCompatActivity implements DatePick
         createMeeting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                createMeeting.setEnabled(false);
                 createMeetingAndUpdateDatabase();
             }
         });
@@ -233,16 +234,20 @@ public class CreateMeetingActivity extends AppCompatActivity implements DatePick
 
                         if(attendees.indexOf(meetingAttendee) == attendees.size()-1){
                             setResult(Activity.RESULT_OK, parentIntent);
+                            createMeeting.setEnabled(true);
                             finish();
                         }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                        createMeeting.setEnabled(true);
                     }
                 });
             }
+        }
+        else {
+            createMeeting.setEnabled(true);
         }
     }
 

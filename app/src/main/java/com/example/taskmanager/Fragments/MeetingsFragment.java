@@ -54,10 +54,14 @@ public class MeetingsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private int totalNumberOfMeetings;
+    private int numberOfReads;
+
     private OnFragmentInteractionListener mListener;
     private FloatingActionButton floatingActionButton;
     private RecyclerView recyclerView;
     private LinearLayout noMeetingsFragment;
+    private LinearLayout progressbarLayout;
 
     //DATABASE STUFF
 
@@ -103,7 +107,8 @@ public class MeetingsFragment extends Fragment {
         currentUser = firebaseAuthInstance.getCurrentUser();
         userMeetingsDbReference = FirebaseDatabase.getInstance().getReference().child("meetings");
         currentUserDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid());
-
+        numberOfReads = 0;
+        totalNumberOfMeetings = 0;
 
         meetings = new ArrayList<>();
 
@@ -124,12 +129,20 @@ public class MeetingsFragment extends Fragment {
     private void getMeetingsForCurrentUser() {
         meetings = new ArrayList<>();
 
-        setAdapter();
+
         currentUserDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 User currentUser = dataSnapshot.getValue(User.class);
 
+                totalNumberOfMeetings = currentUser.meetingList.size();
+
+                if(totalNumberOfMeetings == 0){
+                    setAdapter();
+                }
+                else {
+                    progressbarLayout.setVisibility(View.VISIBLE);
+                }
                 for (UserMeeting userMeeting : currentUser.getMeetingList()){
                     DatabaseReference currentMeeting = FirebaseDatabase.getInstance().getReference()
                             .child("meetings").child(userMeeting.meetingId);
@@ -137,8 +150,14 @@ public class MeetingsFragment extends Fragment {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             Meeting meeting = dataSnapshot.getValue(Meeting.class);
-                            meetings.add(meeting);
-                            setAdapter();
+                            if(meeting != null){
+                                meetings.add(meeting);
+                                numberOfReads++;
+                                if(numberOfReads == totalNumberOfMeetings) {
+                                    setAdapter();
+                                }
+                            }
+
                         }
 
                         @Override
@@ -158,6 +177,12 @@ public class MeetingsFragment extends Fragment {
     }
 
     public void setAdapter(){
+
+        totalNumberOfMeetings = 0;
+        numberOfReads = 0;
+
+        progressbarLayout.setVisibility(View.GONE);
+
         if(meetings.size() == 0 ){
             noMeetingsFragment.setVisibility(View.VISIBLE);
         }
@@ -179,6 +204,8 @@ public class MeetingsFragment extends Fragment {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
         noMeetingsFragment = (LinearLayout) view.findViewById(R.id.no_meeting_layout);
+        progressbarLayout = (LinearLayout) view.findViewById(R.id.progress_bar_layout);
+        progressbarLayout.setVisibility(View.VISIBLE);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override

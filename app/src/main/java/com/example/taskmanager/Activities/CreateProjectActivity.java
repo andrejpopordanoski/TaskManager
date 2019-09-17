@@ -128,8 +128,7 @@ public class CreateProjectActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
                 fabAddProject.setEnabled(false);
                 createProjectAndUpdateBase();
-                progressBar.setVisibility(View.INVISIBLE);
-                fabAddProject.setEnabled(true);
+
 
             }
         });
@@ -153,9 +152,6 @@ public class CreateProjectActivity extends AppCompatActivity {
             for (final Collaborator c : collaborators) {
                 final DatabaseReference collabRef = mDatabaseUsers.child(c.uId);
 
-
-
-
                 collabRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -165,26 +161,26 @@ public class CreateProjectActivity extends AppCompatActivity {
                         collabRef.setValue(user);
                         Log.i(TAG, "Should have added the project to the user too");
                         if (collaborators.indexOf(c) == collaborators.size() - 1){
-
+                            progressBar.setVisibility(View.INVISIBLE);
+                            fabAddProject.setEnabled(true);
                             setResult(Activity.RESULT_OK, parentIntent);
                             finish();
                         }
-
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                        progressBar.setVisibility(View.INVISIBLE);
+                        fabAddProject.setEnabled(true);
                     }
                 });
             }
-
 //            Intent intent = new Intent(this, ProfileProjectsMeetingsActivity.class);
 //            startActivity(intent);
-
         }
         else {
             projectName.setError("Must not be left blank!");
+            progressBar.setVisibility(View.INVISIBLE);
+            fabAddProject.setEnabled(true);
         }
 
     }

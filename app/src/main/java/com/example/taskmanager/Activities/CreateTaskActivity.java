@@ -112,7 +112,9 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                fab.setEnabled(false);
                 createTaskAndUpdateBase();
+
             }
         });
 
@@ -169,19 +171,23 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
     public void createTaskAndUpdateBase() {
         if(taskName.getText().toString().isEmpty()){
            taskName.setError("Must not leave this field blank!");
+            fab.setEnabled(true);
             return;
         }
         if(spinner.getSelectedItem() == null){
             errorTextView.setText("Must select a collaborator! If no collaborators are available, please add them to your project");
             errorTextView.setVisibility(View.VISIBLE);
+            fab.setEnabled(true);
             return;
         }
         if(date == null){
             dateTextView.setError("Must select a date for the task!");
+            fab.setEnabled(true);
             return;
         }
         if(priorityTextView.getText().toString().isEmpty()){
             priorityTextView.setError("Must choose a priority for the task");
+            fab.setEnabled(true);
             return;
         }
 
@@ -196,6 +202,7 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
             @Override
             public void onComplete(@NonNull com.google.android.gms.tasks.Task<Void> task) {
                 setResult(Activity.RESULT_OK, parentIntent);
+                fab.setEnabled(true);
                 finish();
             }
         });

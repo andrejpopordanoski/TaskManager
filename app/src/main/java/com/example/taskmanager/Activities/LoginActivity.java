@@ -60,12 +60,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if(email.isEmpty()){
             loginEmailText.setError("Email field is empty");
+            loginButton.setEnabled(true);
             return;
         }
         if(password.isEmpty()){
             loginPasswordText.setError("Password field is empty");
-            return;
 
+            loginButton.setEnabled(true);
+            return;
         }
 
 
@@ -87,6 +89,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
                 else {
                     Toast.makeText(LoginActivity.this, task.getException().getMessage().toString(), Toast.LENGTH_SHORT).show();
+                    loginButton.setEnabled(true);
+
                     loginProgressBar.setVisibility(View.INVISIBLE);
                 }
             }
@@ -99,7 +103,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         @Override
     public void onClick(View v) {
         if(v == loginButton){
+            v.setEnabled(false);
             logUserToApp();
+
         }
         else {
             openRegisterActivity();

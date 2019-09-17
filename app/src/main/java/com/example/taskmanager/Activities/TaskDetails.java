@@ -78,12 +78,16 @@ public class TaskDetails extends AppCompatActivity {
 
         if(currentTask.taskState.equals("DONE")){
             setInProgressButton.setText("DELETE TASK");
-        }
-        if(currentTask.taskState.equals("DONE") && currentProject.isUserFromType(mCurrentUser.getUid(), "Project Manager")){
-            actionButton.setVisibility(View.VISIBLE);
             actionButton.setText("SET AS \"TO DO\"");
-            setInProgressButton.setVisibility(View.VISIBLE);
+            setInProgressButton.setVisibility(View.INVISIBLE);
+            actionButton.setVisibility(View.INVISIBLE);
+            if(currentProject.isUserFromType(mCurrentUser.getUid(), "Project Manager")){
+                setInProgressButton.setVisibility(View.VISIBLE);
+                actionButton.setVisibility(View.VISIBLE);
+            }
+
         }
+
 
 
 
@@ -91,8 +95,8 @@ public class TaskDetails extends AppCompatActivity {
             actionButton.setText("TEST FAILED");
             setInProgressButton.setText("TEST PASSED");
             if(currentProject.isUserFromType(mCurrentUser.getUid(), "Tester")){
-                actionButton.setVisibility(View.INVISIBLE);
-                setInProgressButton.setVisibility(View.INVISIBLE);
+                actionButton.setVisibility(View.VISIBLE);
+                setInProgressButton.setVisibility(View.VISIBLE);
             }
         }
 
