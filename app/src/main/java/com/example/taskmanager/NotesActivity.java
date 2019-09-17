@@ -62,7 +62,7 @@ public class NotesActivity extends AppCompatActivity {
         });
         notes = new ArrayList<>();
         setUpFirebase();
-        getNotesFromDatabase();
+//        getNotesFromDatabase();
 
     }
 
@@ -103,13 +103,24 @@ public class NotesActivity extends AppCompatActivity {
         currentUserDatabaseReference = firebaseDatabaseInstance.getReference().child("users").child(currentUser.getUid());
         notesDatabaseReference = firebaseDatabaseInstance.getReference().child("notes");
         currentMeetingDatabaseReference = firebaseDatabaseInstance.getReference().child("meetings").child(meetingId);
+        notesDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                getNotesFromDatabase();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK){
-            getNotesFromDatabase();
+//            getNotesFromDatabase();
         }
     }
 }

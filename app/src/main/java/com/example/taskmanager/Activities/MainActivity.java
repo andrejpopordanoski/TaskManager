@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     }
                     else {
-                        Toast.makeText(MainActivity.this, "Registered failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         registerProgressBar.setVisibility(View.INVISIBLE);
                     }
                 }

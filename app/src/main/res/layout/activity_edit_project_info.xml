@@ -143,6 +143,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp"
+                                android:layout_weight="1"
                                 android:orientation="vertical">
                                 <!--<ImageView-->
                                 <!--android:layout_width="40dp"-->
@@ -161,7 +162,7 @@
 
                                 <com.google.android.material.textfield.TextInputLayout
                                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-                                    android:layout_width="300dp"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:hint="Collaborator email"
@@ -181,6 +182,7 @@
                             <ImageButton
                                 android:id="@+id/add_collab_button"
                                 android:layout_width="33dp"
+                                android:layout_margin="25dp"
                                 android:background="@drawable/ic_person_add_black_24dp"
                                 android:layout_height="33dp"
                                 android:layout_gravity="center"

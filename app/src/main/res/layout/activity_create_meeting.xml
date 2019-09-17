@@ -6,6 +6,7 @@
     >
 
     <LinearLayout
+        android:background="@color/backgrounds"
         android:orientation="vertical" android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -42,7 +43,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/coolBlue"
+                    android:background="@color/backgrounds"
                     android:textColorHint="@color/colorPrimary"
                     >
 
@@ -64,7 +65,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/coolBlue"
+                    android:background="@color/backgrounds"
                     android:textColorHint="@color/colorPrimary"
                     >
 
@@ -87,7 +88,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/coolBlue"
+                    android:background="@color/backgrounds"
                     android:textColorHint="@color/colorPrimary"
                     >
 
@@ -110,7 +111,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/coolBlue"
+                    android:background="@color/backgrounds"
                     android:textColorHint="@color/colorPrimary"
                     >
 
@@ -207,7 +208,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Attendee email"
-                            android:background="@color/coolBlue"
+                            android:background="@color/backgrounds"
                             android:textColorHint="@color/colorPrimary"
                             >
 
