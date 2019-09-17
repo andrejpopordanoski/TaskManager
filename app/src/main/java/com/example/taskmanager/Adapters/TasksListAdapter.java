@@ -74,14 +74,14 @@ public class TasksListAdapter extends RecyclerView.Adapter<TasksListAdapter.View
 
 
         if(mTasks.get(position).priority.equals("High")){
-            holder.priorityLayout.setBackgroundColor(Color.parseColor("#e91e63"));
+            holder.priorityLayout.setBackgroundColor(Color.parseColor("#B90202"));
         }
 
         if(mTasks.get(position).priority.equals("Medium")){
-            holder.priorityLayout.setBackgroundColor(Color.parseColor("#66bb6a"));
+            holder.priorityLayout.setBackgroundColor(Color.parseColor("#EE9175"));
         }
         if(mTasks.get(position).priority.equals("Low")){
-            holder.priorityLayout.setBackgroundColor(Color.parseColor("#e2e619"));
+            holder.priorityLayout.setBackgroundColor(Color.parseColor("#1A89DF"));
         }
 
         if(mTasks.get(position).testFailed){
