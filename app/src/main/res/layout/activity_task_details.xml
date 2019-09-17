@@ -268,26 +268,26 @@
 
                     <Button
                         android:id="@+id/details_action_button"
-                        android:layout_width="wrap_content"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:background="@color/colorAccent"
                         android:padding="15dp"
                         android:text="SET READY FOR TEST"
                         android:textColor="#ffffff"
-                        android:textSize="15dp" />
+                        android:textSize="12sp" />
 
 
                     <Button
                         android:id="@+id/details_set_in_progress_buttton"
-                        android:layout_width="wrap_content"
+                        android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:background="@color/colorAccent"
                         android:padding="15dp"
                         android:text="SET IN PROGRESS"
                         android:textColor="#ffffff"
-                        android:textSize="15dp" />
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
