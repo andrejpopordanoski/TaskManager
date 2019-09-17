@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.TaskDetails">
@@ -12,260 +13,248 @@
         android:orientation="vertical"
         android:layout_weight="1"
         >
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:orientation="vertical"
-            android:background="@color/colorPrimaryDark"
-            android:gravity="bottom">
-            <TextView
-                android:id="@+id/task_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="30dp"
-                android:textColor="#eeeeee"
-                android:text="Task name"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                />
+
+        <TextView
+            android:id="@+id/task_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Task name"
+            android:textColor="@color/colorPrimary"
+            android:textSize="30dp" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="0dp"
+            app:cardUseCompatPadding="true"
+            app:cardElevation="3dp">
 
             <LinearLayout
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@drawable/card_img"
-                android:orientation="horizontal"
-                android:elevation="5dp"
-
-                android:clipToPadding="false"
-                android:padding="10dp"
-                >
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:elevation="4dp">
 
                 <LinearLayout
-                    android:layout_width="200dp"
+                    android:id="@+id/duedatepriority"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:orientation="vertical">
 
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:padding="5dp">
+                    <LinearLayout
 
-                    <TextView
-                        android:textColor="#000000"
-                        android:textStyle="bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Due date: "
-                        android:textSize= "@dimen/medium_txt_size" />
-
-                    <TextView
-                        android:id="@+id/details_due_date"
                         android:layout_width="match_parent"
-                        android:textStyle=""
-                        android:layout_height="match_parent"
-                        android:textColor="@color/colorAccent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:lines="4"
-                        android:text="20ti oktomvri iljadu i 2010 2019 godina"
-                        android:textSize="@dimen/small_txt_size" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@color/backgrounds"
+                        android:clipToPadding="false"
+                        android:elevation="5dp"
+
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:padding="5dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="left"
+                                android:text="Due date: "
+                                android:textColor="#000000"
+                                android:textSize="@dimen/medium_txt_size" />
+
+                            <TextView
+                                android:id="@+id/details_due_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="left"
+
+                                android:text="Friday, 21st September, 2019"
+                                android:textColor="@color/colorAccent"
+                                android:textSize="@dimen/small_txt_size"
+                                android:textStyle="" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="left"
+                                    android:text="Priority:"
+                                    android:textColor="@color/colorPrimaryDark"
+                                    android:textSize="@dimen/medium_txt_size" />
+
+                                <TextView
+                                    android:id="@+id/details_priority"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+
+                                    android:text="High"
+                                    android:textColor="@color/colorAccent"
+                                    android:textSize="@dimen/small_txt_size" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/collaborators_wrap"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/backgrounds"
 
-                    android:layout_width="2dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:background="@color/coolBlue"
                     android:orientation="vertical"
-                    android:padding="0dp"></LinearLayout>
+                    android:padding="10dp">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        >
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginLeft="10dp"
+                            android:src="@drawable/ic_person_black_24dp"></ImageView>
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/details_collab_email"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="20dp"
+
+                                android:text="andrej@artistika.com"
+                                android:textColor="@color/colorPrimary"
+
+                                android:textSize="20dp"
+
+                                />
+
+                            <TextView
+                                android:id="@+id/details_collab_role"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Role:"
+                                android:textColor="@color/colorAccent"
+
+                                android:textSize="15dp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:background="@color/backgrounds"
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
-                    <LinearLayout
-                        android:id="@+id/taskPriority"
-                        android:layout_width="7dp"
-                        android:layout_height="match_parent"
-                        android:layout_margin="5dp"
-                        android:background="@color/highPriorityTask"
-                        android:orientation="vertical"
-                        android:padding="0dp"></LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="140dp"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="5dp">
+                        android:layout_marginLeft="10dp"
+                        android:text="Description: "
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/medium_txt_size"
+                        />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Priority:"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textSize="@dimen/medium_txt_size"
-                            android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/details_description_text"
+                        android:layout_width="wrap_content"
 
-                        <TextView
-                            android:id="@+id/details_priority"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:textColor="@color/colorAccent"
-                            android:lines="4"
-                            android:text="High"
-                            android:textSize="@dimen/small_txt_size" />
-                    </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:padding="20dp"
+                        android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book"
+                        android:textSize="@dimen/small_txt_size"
+                        android:textColor="@color/colorPrimary">
 
+                    </TextView>
                 </LinearLayout>
-
-            </LinearLayout>
-
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/collaborators_wrap"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@color/backgrounds"
-            android:layout_margin="10dp"
-            android:padding="10dp"
-            android:layout_marginBottom="2dp"
-            android:elevation="4dp"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold"
-                android:textSize="@dimen/medium_txt_size"
-                android:text="Asignee: "
-                android:layout_marginLeft="10dp"
-                />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                >
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/ic_person_black_24dp"
-                    android:layout_gravity="center"
-                    ></ImageView>
-
-
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1"
-                    >
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/details_collab_email"
+                    <Button
+                        android:id="@+id/details_action_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="20dp"
+                        android:layout_margin="10dp"
+                        android:background="@color/colorAccent"
+                        android:padding="15dp"
+                        android:text="SET READY FOR TEST"
+                        android:textColor="#ffffff"
+                        android:textSize="15dp" />
 
-                        android:text="andrej@artistika.com"
-                        android:textColor="@color/colorPrimary"
 
-                        android:textSize="20dp"
-
-                        />
-
-                    <TextView
-                        android:id="@+id/details_collab_role"
+                    <Button
+                        android:id="@+id/details_set_in_progress_buttton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/colorAccent"
-                        android:text="Role:"
-
-                        android:textSize="15dp"
-                        />
+                        android:layout_margin="10dp"
+                        android:background="@color/colorAccent"
+                        android:padding="15dp"
+                        android:text="SET IN PROGRESS"
+                        android:textColor="#ffffff"
+                        android:textSize="15dp" />
 
                 </LinearLayout>
+
             </LinearLayout>
 
+        </com.google.android.material.card.MaterialCardView>
 
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1"
-            android:layout_margin="10dp"
-            android:padding="10dp"
-            android:elevation="5dp"
-            android:background="@color/backgrounds"
-            >
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold"
-                android:layout_marginLeft="10dp"
-                android:textSize="@dimen/medium_txt_size"
-                android:text="Description: "
-                />
-            <TextView
-                android:id="@+id/details_description_text"
-                android:padding="20dp"
-
-                android:layout_width="wrap_content"
-                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book"
-                android:textSize="@dimen/small_txt_size"
-                android:layout_height="wrap_content">
-
-            </TextView>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center"
-            android:gravity="center"
-            >
-
-            <Button
-                android:id="@+id/details_action_button"
-                android:layout_width="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@color/colorAccent"
-                android:layout_height="wrap_content"
-                android:padding="15dp"
-                android:text="SET READY FOR TEST"
-                android:textColor="#ffffff"
-                android:textSize="15dp" />
-
-
-            <Button
-                android:id="@+id/details_set_in_progress_buttton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:background="@color/colorAccent"
-                android:padding="15dp"
-                android:text="SET IN PROGRESS"
-                android:textColor="#ffffff"
-                android:textSize="15dp" />
-
-        </LinearLayout>
 
 
     </LinearLayout>
