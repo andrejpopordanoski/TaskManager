@@ -58,6 +58,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String email = loginEmailText.getText().toString().trim();
         String password = loginPasswordText.getText().toString().trim();
 
+        if(email.isEmpty()){
+            loginEmailText.setError("Email field is empty");
+            return;
+        }
+        if(password.isEmpty()){
+            loginPasswordText.setError("Password field is empty");
+            return;
+
+        }
+
+
+
         loginProgressBar.setVisibility(View.VISIBLE);
 
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

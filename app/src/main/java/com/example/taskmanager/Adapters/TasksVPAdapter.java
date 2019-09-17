@@ -27,11 +27,11 @@ public class TasksVPAdapter extends FragmentStatePagerAdapter {
 
         switch (position){
             case 0:
-                return new TasksTODOFragment(this.currentProject);
+                return new TasksTODOFragment(this.currentProject, "TODO");
             case 1:
-                return new TasksTESTSFragment(this.currentProject);
+                return new TasksTODOFragment(this.currentProject, "TEST");
             case 2:
-                return new TasksDONEFragment(this.currentProject);
+                return new TasksTODOFragment(this.currentProject, "DONE");
             default:
                 return null;
         }

@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 import com.example.taskmanager.Adapters.TasksListAdapter;
 import com.example.taskmanager.Activities.CreateTaskActivity;
@@ -50,6 +51,7 @@ public class TasksTODOFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
+    private String type;
     private String mParam1;
     private String mParam2;
     private OnFragmentInteractionListener mListener;
@@ -64,6 +66,8 @@ public class TasksTODOFragment extends Fragment {
     private RadioButton allTasks;
     private RadioButton yourTasks;
 
+    private TextView noTasksInHere;
+
     private LinearLayout noTasksLayout;
 
 
@@ -74,13 +78,13 @@ public class TasksTODOFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public TasksTODOFragment(Project currentProject) {
+    public TasksTODOFragment(Project currentProject, String type) {
 
         this.currentProject = currentProject;
         mDatabaseCurrentProject = FirebaseDatabase.getInstance().getReference().child("projects").child(this.currentProject.projectId);
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = mAuth.getCurrentUser();
-
+        this.type = type;
         mDatabaseCurrentProject.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -120,7 +124,7 @@ public class TasksTODOFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        taskList = currentProject.getAllTasksFromState("TODO");
+        taskList = currentProject.getAllTasksFromState(type);
 
 
 
@@ -137,7 +141,11 @@ public class TasksTODOFragment extends Fragment {
 
         allTasks = (RadioButton) view.findViewById(R.id.all_tasks);
         yourTasks = (RadioButton) view.findViewById(R.id.your_tasks);
-        allTasks.setChecked(true);
+        fab = (FloatingActionButton) view.findViewById(R.id.fab_new_task);
+        recyclerView = (RecyclerView) view.findViewById(R.id.tasks_recycler_view);
+        noTasksLayout = (LinearLayout) view.findViewById(R.id.no_tasks_layout);
+        noTasksInHere = (TextView) view.findViewById(R.id.no_tasks_in_here);
+        Log.i("TODO", "onCreateView");
 
         allTasks.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,21 +160,34 @@ public class TasksTODOFragment extends Fragment {
             }
         });
 
-        fab = (FloatingActionButton) view.findViewById(R.id.fab_new_task);
-
-        noTasksLayout = (LinearLayout) view.findViewById(R.id.no_tasks_layout);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), CreateTaskActivity.class);
-                intent.putExtra("currentProject", currentProject);
-                startActivityForResult(intent, 2);
-            }
-        });
+        allTasks.setChecked(true);
+        allTasks.performClick();
 
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.tasks_recycler_view);
+        if(type.equals("TODO")) {
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getContext(), CreateTaskActivity.class);
+                    intent.putExtra("currentProject", currentProject);
+                    startActivityForResult(intent, 2);
+                }
+            });
+        }
+        else {
+            fab.hide();
+        }
+        if(type.equals("TEST")){
+            allTasks.setVisibility(View.INVISIBLE);
+            yourTasks.setVisibility(View.INVISIBLE);
+            noTasksInHere.setText("No tasks have been set to ready for test at the moment!");
+        }
+        if(type.equals("DONE")){
+            noTasksInHere.setText("No tasks have been set to done at the moment");
+        }
+
+
+
         recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
         setAdapter();
 
@@ -226,7 +247,7 @@ public class TasksTODOFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Project project = dataSnapshot.getValue(Project.class);
                 currentProject = project;
-                taskList = project.getAllTasksFromState("TODO");
+                taskList = project.getAllTasksFromState(type);
 
                 setAdapter();
             }
@@ -260,6 +281,16 @@ public class TasksTODOFragment extends Fragment {
         recyclerView.setAdapter(adapter);
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(allTasks != null) {
+            allTasks.setChecked(true);
+            allTasks.performClick();
+        }
+
+    }
+
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
@@ -268,14 +299,14 @@ public class TasksTODOFragment extends Fragment {
         switch(view.getId()) {
             case R.id.all_tasks:
                 if (checked) {
-                    this.taskList = currentProject.getAllTasksFromState("TODO");
+                    this.taskList = currentProject.getAllTasksFromState(type);
                     setAdapter();
                 }
 
                 break;
             case R.id.your_tasks:
                 if (checked) {
-                    this.taskList = currentProject.getAllTaksksFromStateAndCollaborator("TODO", mCurrentUser.getEmail());
+                    this.taskList = currentProject.getAllTaksksFromStateAndCollaborator(type, mCurrentUser.getEmail());
                     setAdapter();
                 }
                 break;

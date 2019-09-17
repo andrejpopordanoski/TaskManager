@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.taskmanager.Adapters.MeetingListAdapter;
 import com.example.taskmanager.CreateMeetingActivity;
@@ -56,6 +57,7 @@ public class MeetingsFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private FloatingActionButton floatingActionButton;
     private RecyclerView recyclerView;
+    private LinearLayout noMeetingsFragment;
 
     //DATABASE STUFF
 
@@ -63,6 +65,8 @@ public class MeetingsFragment extends Fragment {
     private FirebaseUser currentUser;
     private DatabaseReference userMeetingsDbReference;
     private DatabaseReference currentUserDatabaseReference;
+    private DatabaseReference mDatabaseCurrentUser;
+
     private List<Meeting> meetings;
     private MeetingListAdapter adapter;
 
@@ -99,15 +103,28 @@ public class MeetingsFragment extends Fragment {
         currentUser = firebaseAuthInstance.getCurrentUser();
         userMeetingsDbReference = FirebaseDatabase.getInstance().getReference().child("meetings");
         currentUserDatabaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid());
+
+
         meetings = new ArrayList<>();
 
-        getMeetingsForCurrentUser();
+        currentUserDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                getMeetingsForCurrentUser();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
     private void getMeetingsForCurrentUser() {
         meetings = new ArrayList<>();
 
+        setAdapter();
         currentUserDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -141,6 +158,12 @@ public class MeetingsFragment extends Fragment {
     }
 
     public void setAdapter(){
+        if(meetings.size() == 0 ){
+            noMeetingsFragment.setVisibility(View.VISIBLE);
+        }
+        else {
+            noMeetingsFragment.setVisibility(View.GONE);
+        }
         adapter = new MeetingListAdapter(meetings);
         recyclerView.setAdapter(adapter);
     }
@@ -155,6 +178,7 @@ public class MeetingsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.fragment_recycler_view);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
+        noMeetingsFragment = (LinearLayout) view.findViewById(R.id.no_meeting_layout);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,7 +195,7 @@ public class MeetingsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK){
-            getMeetingsForCurrentUser();
+//            getMeetingsForCurrentUser();
         }
 
     }

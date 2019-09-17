@@ -107,6 +107,7 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         TextView projectName;
         LinearLayout parentLayout;
         ImageView starImage;
+        ImageView moreButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -114,8 +115,15 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
             projectName = (TextView) itemView.findViewById(R.id.project_name);
             parentLayout = (LinearLayout) itemView.findViewById(R.id.parent_layout);
             starImage = (ImageView) itemView.findViewById(R.id.star);
-
+            moreButton = (ImageView) itemView.findViewById(R.id.more_icon);
             parentLayout.setOnCreateContextMenuListener(this);
+            moreButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    parentActivity.openContextMenu(parentLayout);
+                }
+            });
+
         }
 
         @Override

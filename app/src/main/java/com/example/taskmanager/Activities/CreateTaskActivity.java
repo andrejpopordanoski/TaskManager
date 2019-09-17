@@ -16,8 +16,10 @@ import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+
 import android.widget.TextView;
 
+import com.example.taskmanager.Adapters.SpinnerItemAdapter;
 import com.example.taskmanager.Fragments.Dialogs.DatePickerFragment;
 import com.example.taskmanager.Fragments.Dialogs.DescriptionDialog;
 import com.example.taskmanager.Fragments.Dialogs.SingleChoiceDialog;
@@ -33,6 +35,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -207,9 +210,7 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
 
     public void changeSpinnerOptions(String collabType){
         List<Collaborator> collabs = currentProject.getAllCollabsFromType(collabType);
-        ArrayAdapter<Collaborator> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, collabs);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
+        SpinnerItemAdapter adapter = new SpinnerItemAdapter(this, collabs);
 
         if(collabs.size() == 0) {
             errorTextView.setVisibility(View.VISIBLE);

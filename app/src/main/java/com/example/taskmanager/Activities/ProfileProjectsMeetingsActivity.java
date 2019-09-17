@@ -80,9 +80,6 @@ public class ProfileProjectsMeetingsActivity extends AppCompatActivity implement
     @Override
     public boolean onContextItemSelected(MenuItem item) {
 
-
-
-        Log.i(TAG, "Does it really get called tho?");
         switch (item.getItemId()){
             case R.id.open_tasks:
                 adapter.openTask(item.getGroupId());

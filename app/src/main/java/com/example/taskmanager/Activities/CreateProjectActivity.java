@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -213,14 +215,41 @@ public class CreateProjectActivity extends AppCompatActivity {
             closeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    TextView email = view.findViewById(R.id.collab_email);
-                    for(Collaborator c:collaborators){
-                        if(c.mail.equals(collabEmail.trim())){
-                            collaborators.remove(c);
-                            break;
+
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                    builder.setTitle("Confirm");
+                    builder.setMessage("Are you sure you want to remove the collaborator and all assigned tasks?");
+
+                    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Do nothing but close the dialog
+
+                            TextView email = view.findViewById(R.id.collab_email);
+                            for(Collaborator c:collaborators){
+                                if(c.mail.equals(collabEmail.trim())){
+                                    collaborators.remove(c);
+                                    break;
+                                }
+                            }
+                            ((ViewManager) view.getParent()).removeView(view);
+                            dialog.dismiss();
                         }
-                    }
-                    ((ViewManager) view.getParent()).removeView(view);
+                    });
+                    builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            // Do nothing
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
                 }
             });
 

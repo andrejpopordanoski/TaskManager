@@ -60,8 +60,6 @@ public class CreateMeetingActivity extends AppCompatActivity implements DatePick
     private Button createMeeting;
     private LinearLayout addAttendee;
 
-
-
     //Firebase stuff
     private FirebaseDatabase firebaseDatabaseInstance;
     private String currentUserEmail;

@@ -16,6 +16,7 @@ import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.taskmanager.Activities.EditProjectInfoActivity;
 import com.example.taskmanager.Activities.ProfileProjectsMeetingsActivity;
@@ -56,10 +57,14 @@ public class ProjectsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private int totalNumberOfProjects;
+    private int numberOfReads;
+
     private OnFragmentInteractionListener mListener;
 
     private FloatingActionButton fabAddProject;
     private RecyclerView recyclerView;
+    private LinearLayout progressBarLayout;
 
     private FirebaseAuth mAuth;
 
@@ -69,6 +74,8 @@ public class ProjectsFragment extends Fragment {
     private DatabaseReference mDatabaseProjects;
     private ArrayList<Project> userProjects;
     ProjectListAdapter adapter;
+
+    private LinearLayout noProject;
 
     private List<View> projectManagerViews;
 
@@ -99,7 +106,7 @@ public class ProjectsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "oncreate called");
-
+        numberOfReads = 0;
 
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
@@ -113,6 +120,10 @@ public class ProjectsFragment extends Fragment {
         mDatabaseProjects = FirebaseDatabase.getInstance().getReference().child("projects");
         mDatabaseCurrentUser = FirebaseDatabase.getInstance().getReference().child("users").child(mCurrentUser.getUid());
         userProjects = new ArrayList<>();
+
+        totalNumberOfProjects = 0;
+        numberOfReads = 0;
+
 
 //        getProjectsForCurrectUser();
 
@@ -130,10 +141,10 @@ public class ProjectsFragment extends Fragment {
 //            }
 //        });
 
+
         mDatabaseCurrentUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
 
                 getProjectsForCurrectUser();
 
@@ -150,13 +161,23 @@ public class ProjectsFragment extends Fragment {
 
     private void getProjectsForCurrectUser() {
         Log.i(TAG, "getProjectForCurrentUser called");
+
         userProjects = new ArrayList<>();
         mDatabaseCurrentUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User currentUser = dataSnapshot.getValue(User.class);
+                final User currentUser = dataSnapshot.getValue(User.class);
+                totalNumberOfProjects = currentUser.projectList.size();
 
-                for(UserProject up:currentUser.getProjectList()){
+                if(totalNumberOfProjects==0){
+                    setAdapter();
+                }
+                else {
+                    progressBarLayout.setVisibility(View.VISIBLE);
+                }
+
+                for(final UserProject up:currentUser.getProjectList()){
+
                     DatabaseReference currProject = mDatabaseProjects.child(up.projectID);
                     currProject.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -164,10 +185,11 @@ public class ProjectsFragment extends Fragment {
                             Project project = dataSnapshot.getValue(Project.class);
                             if(project != null) {
                                 userProjects.add(project);
-                                Log.i(TAG, "adding projects" + project.name);
+                                numberOfReads++;
+                                if(numberOfReads==totalNumberOfProjects){
+                                    setAdapter();
+                                }
                             }
-                            setAdapter();
-
                         }
 
                         @Override
@@ -188,8 +210,19 @@ public class ProjectsFragment extends Fragment {
 
     public void setAdapter() {
         Log.i(TAG, "Adapter is setting up, userprojects look like " + userProjects.toString());
-        ProfileProjectsMeetingsActivity ppma = (ProfileProjectsMeetingsActivity) getActivity();
 
+        totalNumberOfProjects = 0;
+        numberOfReads = 0;
+
+        ProfileProjectsMeetingsActivity ppma = (ProfileProjectsMeetingsActivity) getActivity();
+        progressBarLayout.setVisibility(View.GONE);
+        if(userProjects.size() == 0){
+            noProject.setVisibility(View.VISIBLE);
+        }
+        else {
+            noProject.setVisibility(View.GONE);
+
+        }
         adapter = new ProjectListAdapter(userProjects, this.getActivity(), this);
         recyclerView.setAdapter(adapter);
         ppma.setAdapter(adapter);
@@ -205,14 +238,23 @@ public class ProjectsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_projects, container, false);
         recyclerView = (RecyclerView)  view.findViewById(R.id.recycler_view);
         Log.i(TAG, "onCreateView called");
-        setAdapter();
+
         recyclerView.setLayoutManager(new LinearLayoutManager(container.getContext()));
 
         fabAddProject = (FloatingActionButton) view.findViewById(R.id.fab_projects);
 
+        noProject = (LinearLayout) view.findViewById(R.id.no_project_layout);
+
+        progressBarLayout = (LinearLayout) view.findViewById(R.id.progress_bar_layout);
+//
+//        progressBarLayout.setVisibility(View.GONE);
+        progressBarLayout.setVisibility(View.VISIBLE);
+
         /**
          *
          */
+//        setAdapter();
+
 
 
         fabAddProject.setOnClickListener( new View.OnClickListener() {

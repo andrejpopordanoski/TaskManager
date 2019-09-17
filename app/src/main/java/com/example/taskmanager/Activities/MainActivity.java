@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         registrationButton = (Button) findViewById(R.id.reg_user_button);
 
-        registerEmailText = (EditText) findViewById(R.id.reg_user_address);
+        registerEmailText = (EditText) findViewById(R.id.create_meeting_name);
         registerPasswordText = (EditText) findViewById(R.id.reg_user_password);
         registerNameText = (EditText) findViewById(R.id.reg_user_name);
         registerPhoneText = (EditText) findViewById(R.id.reg_user_phone);

@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,6 +40,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EditProjectInfoActivity extends AppCompatActivity {
+
+
+    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which){
+                case DialogInterface.BUTTON_POSITIVE:
+                    //Yes button clicked
+
+                    break;
+
+                case DialogInterface.BUTTON_NEGATIVE:
+                    //No button clicked
+                    break;
+            }
+        }
+    };
 
 
     private boolean changeNameEnabled = false;
@@ -201,26 +220,52 @@ public class EditProjectInfoActivity extends AppCompatActivity {
             closeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    currentProject.deleteCollaboratorWithEmail(c.mail);
-                    currentProject.deleteTaskForCollaborator(c);
 
-                    mDatabaseProjects.child(currentProject.projectId).setValue(currentProject);
-                    ((ViewManager) view.getParent()).removeView(view);
-                    final DatabaseReference userRef = mDatabaseUsers.child(c.uId);
-                    userRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            User user = dataSnapshot.getValue(User.class);
-                            user.removeUserProjectWithId(currentProject.projectId);
-                            userRef.setValue(user);
 
-                        }
+                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                    builder.setTitle("Confirm");
+                    builder.setMessage("Are you sure you want to remove the collaborator and all assigned tasks?");
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Do nothing but close the dialog
+                            currentProject.deleteCollaboratorWithEmail(c.mail);
+                            currentProject.deleteTaskForCollaborator(c);
+
+                            mDatabaseProjects.child(currentProject.projectId).setValue(currentProject);
+                            ((ViewManager) view.getParent()).removeView(view);
+                            final DatabaseReference userRef = mDatabaseUsers.child(c.uId);
+                            userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    User user = dataSnapshot.getValue(User.class);
+                                    user.removeUserProjectWithId(currentProject.projectId);
+                                    userRef.setValue(user);
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                            dialog.dismiss();
                         }
                     });
+                    builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            // Do nothing
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
 
                 }
             });
@@ -254,16 +299,42 @@ public class EditProjectInfoActivity extends AppCompatActivity {
             closeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    TextView email = view.findViewById(R.id.collab_email);
-                    for(Collaborator c:currentProject.collaborators){
-                        if(c.mail.equals(collabEmail.trim())){
-                            currentProject.collaborators.remove(c);
-                            newCollabs.remove(c);
-                            break;
-                        }
-                    }
 
-                    ((ViewManager) view.getParent()).removeView(view);
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                    builder.setTitle("Confirm");
+                    builder.setMessage("Are you sure you want to remove the collaborator and all assigned tasks?");
+
+                    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Do nothing but close the dialog
+                            TextView email = view.findViewById(R.id.collab_email);
+                            for(Collaborator c:currentProject.collaborators){
+                                if(c.mail.equals(collabEmail.trim())){
+                                    currentProject.collaborators.remove(c);
+                                    newCollabs.remove(c);
+                                    break;
+                                }
+                            }
+
+                            ((ViewManager) view.getParent()).removeView(view);
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            // Do nothing
+                            dialog.dismiss();
+                        }
+                    });
+
+                    AlertDialog alert = builder.create();
+                    alert.show();
+
                 }
             });
 
