@@ -165,8 +165,8 @@
 
                                 <com.google.android.material.textfield.TextInputLayout
                                     style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
                                     android:layout_weight="1"
                                     android:hint="Collaborator email"
                                     app:boxBackgroundColor="#F3F4F7">
@@ -174,7 +174,7 @@
                                     <com.google.android.material.textfield.TextInputEditText
                                         android:id="@+id/collab_address"
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
+                                        android:layout_height="match_parent"
                                         android:inputType="text" />
                                 </com.google.android.material.textfield.TextInputLayout>
 
