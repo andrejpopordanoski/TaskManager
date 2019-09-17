@@ -28,7 +28,7 @@
                 android:id="@+id/spinner_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/medium_txt_size"
+                android:textSize="20sp"
                 android:text="Andrej Popordanoski"
                 android:textColor="@color/colorAccent"
                 />

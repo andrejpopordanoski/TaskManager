@@ -30,12 +30,12 @@
                 android:padding="0dp"></LinearLayout>
 
             <LinearLayout
-                android:layout_width="270dp"
+                android:layout_width="342dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="vertical"
-                android:paddingLeft="10dp"
-                android:paddingStart="10dp">
+                android:paddingStart="10dp"
+                android:paddingLeft="10dp">
 
                 <TextView
                     android:id="@+id/meeting_item_meeting_name"
@@ -44,7 +44,7 @@
 
                     android:text="Task 1"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="25dp" />
+                    android:textSize="25sp" />
 
                 <TextView
                     android:id="@+id/meeting_item_meeting_date"
@@ -52,15 +52,16 @@
                     android:layout_height="wrap_content"
 
                     android:hint="Friday"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="20dp" />
+                    android:textColorHint="@color/colorAccent"
+                    android:textSize="15sp" />
             </LinearLayout>
             <ImageView
                 android:id="@+id/in_progress_view"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="end"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                android:layout_gravity="center_vertical|end"
                 android:background="@drawable/ic_access_time_black_24dp"
+                android:backgroundTint="@color/colorAccent"
                 ></ImageView>
 
 

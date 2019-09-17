@@ -101,7 +101,7 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
 
         developer = (RadioButton) findViewById(R.id.developer);
         developer.setChecked(true);
-
+        developer.performClick();
 
         mDatabaseCurrentProject = FirebaseDatabase.getInstance().getReference().child("projects").child(currentProject.projectId);
 
@@ -173,6 +173,7 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
         }
         if(spinner.getSelectedItem() == null){
             errorTextView.setText("Must select a collaborator! If no collaborators are available, please add them to your project");
+            errorTextView.setVisibility(View.VISIBLE);
             return;
         }
         if(date == null){
@@ -253,11 +254,14 @@ public class CreateTaskActivity extends AppCompatActivity implements DatePickerD
 
         date = c;
         dateTextView.setText(currentDate);
+        dateTextView.setError(null);
+
     }
 
     @Override
     public void onPositiveButtonClicked(String[] list, int position) {
         priorityTextView.setText(list[position]);
+        priorityTextView.setError(null);
     }
 
     @Override
