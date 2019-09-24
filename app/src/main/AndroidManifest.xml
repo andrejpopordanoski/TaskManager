@@ -3,46 +3,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.taskmanager">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".Activities.TaskDetails"></activity>
-        <activity android:name=".Activities.EditProjectInfoActivity" />
-        <activity android:name=".Activities.CreateTaskActivity" />
-        <activity android:name=".Activities.TasksActivity" />
-        <activity android:name=".Activities.CreateProjectActivity" />
-        <activity android:name=".Activities.ProfileProjectsMeetingsActivity" />
-        <activity android:name=".Activities.LoginActivity" >
+        <activity android:name=".Activities.RearParkingSensor">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.MainActivity">
+        <activity android:name=".Activities.TaskDetails" />
+        <activity android:name=".Activities.EditProjectInfoActivity" />
+        <activity android:name=".Activities.CreateTaskActivity" />
+        <activity android:name=".Activities.TasksActivity" />
+        <activity android:name=".Activities.CreateProjectActivity" />
+        <activity android:name=".Activities.ProfileProjectsMeetingsActivity" />
+        <activity android:name=".Activities.LoginActivity">
 
         </activity>
-
-
-
-        <activity android:name=".CreateNoteActivity"/>
+        <activity android:name=".Activities.MainActivity"></activity>
+        <activity android:name=".CreateNoteActivity" />
         <activity android:name=".NotesActivity" />
-
         <activity android:name=".CreateMeetingActivity" />
         <activity android:name=".DetailedMeetingActivity" />
-
     </application>
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
