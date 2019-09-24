@@ -19,20 +19,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.TaskDetails" />
-        <activity android:name=".Activities.EditProjectInfoActivity" />
-        <activity android:name=".Activities.CreateTaskActivity" />
-        <activity android:name=".Activities.TasksActivity" />
-        <activity android:name=".Activities.CreateProjectActivity" />
-        <activity android:name=".Activities.ProfileProjectsMeetingsActivity" />
-        <activity android:name=".Activities.LoginActivity">
-
-        </activity>
-        <activity android:name=".Activities.MainActivity"></activity>
-        <activity android:name=".CreateNoteActivity" />
-        <activity android:name=".NotesActivity" />
-        <activity android:name=".CreateMeetingActivity" />
-        <activity android:name=".DetailedMeetingActivity" />
     </application>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
