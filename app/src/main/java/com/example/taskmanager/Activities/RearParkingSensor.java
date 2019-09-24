@@ -2,9 +2,12 @@ package com.example.taskmanager.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.media.Image;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,6 +25,7 @@ public class RearParkingSensor extends AppCompatActivity {
     DatabaseReference distance;
     float distanceRight;
     float differenceBetweenSensors;
+    ImageView leftIndicator,rightIndicator;
 
     DatabaseReference databaseReference;
     @Override
@@ -31,6 +35,8 @@ public class RearParkingSensor extends AppCompatActivity {
         distance = FirebaseDatabase.getInstance().getReference().child("distance");
         distanceMeter = findViewById(R.id.distance_meter);
         wall = findViewById(R.id.wall);
+        leftIndicator = findViewById(R.id.left_indicator);
+        rightIndicator = findViewById(R.id.right_indicator);
         distanceRight = 100f;
         differenceBetweenSensors = 30;
 
