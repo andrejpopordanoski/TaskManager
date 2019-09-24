@@ -31,16 +31,22 @@
             android:gravity="center"
             android:orientation="horizontal">
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/left_indicator"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:rotation="180"
+                android:tint="@color/colorPrimary"
+                android:src="@drawable/ic_wifisymb"
 
-                android:src="@drawable/ic_star_black_24dp"
-                android:layout_marginRight="100dp"
+                android:layout_marginRight="110dp"
                 ></ImageView>
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_star_black_24dp"
+                android:id="@+id/right_indicator"
+                android:layout_width="60dp"
+                android:layout_height="40dp"
+                android:rotation="180"
+                android:tint="@color/colorPrimary"
+                android:src="@drawable/ic_wifisymb"
                 android:layout_gravity="end"
                 ></ImageView>
         </LinearLayout>
