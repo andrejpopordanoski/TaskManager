@@ -3,10 +3,14 @@ package com.example.taskmanager.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -45,15 +49,27 @@ public class RearParkingSensor extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 float distanceLeft = dataSnapshot.getValue(Float.class);
                 distanceMeter.setText(distanceLeft + "cm");
+                if (distanceLeft<=30){
 
+                    Animation animation = new AlphaAnimation(1, 0); //to change visibility from visible to invisible
+                    animation.setDuration((long)distanceLeft*20); //1 second duration for each animation cycle
+                    animation.setInterpolator(new LinearInterpolator());
+                    animation.setRepeatCount(Animation.INFINITE); //repeating indefinitely
+                    animation.setRepeatMode(Animation.REVERSE); //animation will start from end point once ended.
+                    leftIndicator.startAnimation(animation); //to start animation
+                    leftIndicator.setColorFilter(Color.argb(255, 173, 0, 63));
+                }else {
+                    leftIndicator.clearAnimation();
+                    leftIndicator.setColorFilter(Color.argb(255,163,171,184));
+                }
                 float difference = Math.abs(distanceLeft - distanceRight);
                 double hipotenuse = Math.sqrt( Math.pow(difference, 2) + Math.pow(differenceBetweenSensors, 2));
                 double degree = Math.toDegrees(Math.sin(difference/hipotenuse));
                 Log.i("SINUSE", degree + "");
                 if(distanceLeft > distanceRight)
-                    wall.setRotation((float) degree);
-                else
                     wall.setRotation((float) -degree);
+                else
+                    wall.setRotation((float) degree);
             }
 
             @Override
