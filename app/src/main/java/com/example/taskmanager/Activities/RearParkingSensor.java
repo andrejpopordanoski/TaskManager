@@ -37,7 +37,7 @@ public class RearParkingSensor extends AppCompatActivity {
         wall = findViewById(R.id.wall);
         leftIndicator = findViewById(R.id.left_indicator);
         rightIndicator = findViewById(R.id.right_indicator);
-        distanceRight = 100f;
+        distanceRight = 50f;
         differenceBetweenSensors = 30;
 
         distanceLeft.addValueEventListener(new ValueEventListener() {
