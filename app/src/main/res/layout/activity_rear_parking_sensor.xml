@@ -34,16 +34,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:src="@drawable/star_black_24dp"
+                android:src="@drawable/ic_star_black_24dp"
                 android:layout_marginRight="100dp"
                 ></ImageView>
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/star_black_24dp"
+                android:src="@drawable/ic_star_black_24dp"
                 android:layout_gravity="end"
                 ></ImageView>
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/wall"
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:gravity="center"
+            android:rotation="0"
+            android:background="#ffff"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -62,6 +74,7 @@
             android:text="Distance from rear:"
             ></TextView>
         <TextView
+            android:id="@+id/distance_meter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#ffff"
