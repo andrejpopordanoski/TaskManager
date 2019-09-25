@@ -99,9 +99,8 @@
                 android:text="Left rear:"
                 ></TextView>
             <TextView
-                android:id="@+id/distance_meter"
                 android:textStyle="bold"
-
+                android:id="@+id/distance_meter_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#ffff"
@@ -128,6 +127,7 @@
             <TextView
 
                 android:textStyle="bold"
+                android:id="@+id/distance_meter_right"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
