@@ -30,6 +30,7 @@ public class RearParkingSensor extends AppCompatActivity {
     float distanceRight;
     float differenceBetweenSensors;
     ImageView leftIndicator,rightIndicator;
+    LinearLayout car;
 
     DatabaseReference databaseReference;
     @Override
@@ -41,6 +42,7 @@ public class RearParkingSensor extends AppCompatActivity {
         wall = findViewById(R.id.wall);
         leftIndicator = findViewById(R.id.left_indicator);
         rightIndicator = findViewById(R.id.right_indicator);
+        car = findViewById(R.id.car);
         distanceRight = 50f;
         differenceBetweenSensors = 30;
 
@@ -49,27 +51,23 @@ public class RearParkingSensor extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 float distanceLeft = dataSnapshot.getValue(Float.class);
                 distanceMeter.setText(distanceLeft + "cm");
-                if (distanceLeft<=30){
+                if (distanceLeft<=40){
+                    activateCloseDistance(distanceLeft);
+                    car.setTranslationY((360 - distanceLeft*9));
 
-                    Animation animation = new AlphaAnimation(1, 0); //to change visibility from visible to invisible
-                    animation.setDuration((long)distanceLeft*20); //1 second duration for each animation cycle
-                    animation.setInterpolator(new LinearInterpolator());
-                    animation.setRepeatCount(Animation.INFINITE); //repeating indefinitely
-                    animation.setRepeatMode(Animation.REVERSE); //animation will start from end point once ended.
-                    leftIndicator.startAnimation(animation); //to start animation
-                    leftIndicator.setColorFilter(Color.argb(255, 173, 0, 63));
                 }else {
-                    leftIndicator.clearAnimation();
-                    leftIndicator.setColorFilter(Color.argb(255,163,171,184));
+                    vehicleSafeZone();
+                    car.setTranslationY(0);
+
                 }
                 float difference = Math.abs(distanceLeft - distanceRight);
                 double hipotenuse = Math.sqrt( Math.pow(difference, 2) + Math.pow(differenceBetweenSensors, 2));
                 double degree = Math.toDegrees(Math.sin(difference/hipotenuse));
                 Log.i("SINUSE", degree + "");
                 if(distanceLeft > distanceRight)
-                    wall.setRotation((float) -degree);
+                    car.setRotation((float) degree);
                 else
-                    wall.setRotation((float) degree);
+                    car.setRotation((float) -degree);
             }
 
             @Override
@@ -78,5 +76,25 @@ public class RearParkingSensor extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void activateCloseDistance(double distanceLeft) {
+        Animation animation = new AlphaAnimation(1, 0); //to change visibility from visible to invisible
+        animation.setDuration((long)distanceLeft*20); //1 second duration for each animation cycle
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setRepeatCount(Animation.INFINITE); //repeating indefinitely
+        animation.setRepeatMode(Animation.REVERSE); //animation will start from end point once ended.
+        leftIndicator.startAnimation(animation); //to start animation
+        leftIndicator.setColorFilter(Color.argb(255, 173, 0, 63));
+        distanceMeter.setTextColor(Color.argb(255, 173, 0, 63));
+//                    distanceMeter.startAnimation(animation);
+    }
+
+    public void vehicleSafeZone() {
+        leftIndicator.clearAnimation();
+//                    distanceMeter.clearAnimation();
+
+        leftIndicator.setColorFilter(Color.argb(255,163,171,184));
+        distanceMeter.setTextColor(Color.argb(255, 255, 255, 255));
     }
 }

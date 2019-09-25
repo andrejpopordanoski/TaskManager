@@ -16,50 +16,61 @@
         android:layout_margin="30dp"
         android:orientation="vertical"
     >
-        <ImageView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_asset_1"
 
 
-
-            ></ImageView>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-
-            android:orientation="horizontal">
+            android:id="@+id/car"
+            android:orientation="vertical">
             <ImageView
-                android:id="@+id/left_indicator"
-                android:layout_width="60dp"
-                android:layout_height="40dp"
-                android:rotation="190"
-                android:tint="#A3ABB8"
-                android:src="@drawable/ic_wifisymb"
 
-                android:layout_marginRight="130dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/ic_asset_1"
+
+
+
                 ></ImageView>
-            <ImageView
-                android:id="@+id/right_indicator"
-                android:layout_width="60dp"
-                android:layout_height="40dp"
-                android:rotation="170"
-                android:tint="#A3ABB8"
-                android:src="@drawable/ic_wifisymb"
-                android:layout_gravity="end"
-                ></ImageView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:elevation="10dp"
+                android:orientation="horizontal">
+                <ImageView
+                    android:id="@+id/left_indicator"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:rotation="190"
+                    android:tint="#A3ABB8"
+                    android:src="@drawable/ic_wifisymb"
+
+                    android:layout_marginRight="70dp"
+                    ></ImageView>
+                <ImageView
+                    android:id="@+id/right_indicator"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:rotation="170"
+                    android:tint="#A3ABB8"
+                    android:src="@drawable/ic_wifisymb"
+                    android:layout_gravity="end"
+                    ></ImageView>
+            </LinearLayout>
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/wall"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="130dp"
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:gravity="center"
             android:rotation="0"
             android:background="#ffff"
-            android:layout_marginBottom="40dp"
+
             android:orientation="horizontal">
 
         </LinearLayout>
@@ -68,26 +79,64 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp"
         android:gravity="center"
-
         >
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#ffff"
-            android:textStyle="bold"
-            android:textSize="25sp"
-            android:text="Distance from rear:"
-            ></TextView>
-        <TextView
-            android:id="@+id/distance_meter"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginRight="30dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffff"
+
+                android:textSize="20sp"
+                android:text="Left rear:"
+                ></TextView>
+            <TextView
+                android:id="@+id/distance_meter"
+                android:textStyle="bold"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffff"
+                android:textSize="30sp"
+                android:text="10m"
+                ></TextView>
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="#ffff"
-            android:textSize="25sp"
-            android:text="10m"
-            ></TextView>
+            android:orientation="vertical"
+            android:layout_gravity="end"
+            android:gravity="center"
+
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffff"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                android:text="Right rear:"
+                ></TextView>
+            <TextView
+
+                android:textStyle="bold"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ffff"
+                android:textSize="30sp"
+                android:text="10m"
+                ></TextView>
+        </LinearLayout>
+
     </LinearLayout>
+
 </LinearLayout>
