@@ -11,14 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
-        <activity android:name=".Activities.RearParkingSensor">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".Activities.TaskDetails" />
         <activity android:name=".Activities.EditProjectInfoActivity" />
         <activity android:name=".Activities.CreateTaskActivity" />
@@ -26,7 +19,11 @@
         <activity android:name=".Activities.CreateProjectActivity" />
         <activity android:name=".Activities.ProfileProjectsMeetingsActivity" />
         <activity android:name=".Activities.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".Activities.MainActivity"></activity>
         <activity android:name=".CreateNoteActivity" />
