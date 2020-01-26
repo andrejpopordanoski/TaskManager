@@ -69,6 +69,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             loginButton.setEnabled(true);
             return;
         }
+        if(!email.contains("@") || !email.contains(".com")){
+            loginEmailText.setError("Email address is badly formatted");
+            loginButton.setEnabled(true);
+            return;
+        }
+
+        if(password.length() < 8){
+            loginPasswordText.setError("Password is too short. Must be more than 8 characters");
+
+            loginButton.setEnabled(true);
+            return;
+        }
 
 
 

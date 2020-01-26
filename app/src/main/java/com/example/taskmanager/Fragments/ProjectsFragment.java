@@ -214,7 +214,7 @@ public class ProjectsFragment extends Fragment {
         totalNumberOfProjects = 0;
         numberOfReads = 0;
 
-        ProfileProjectsMeetingsActivity ppma = (ProfileProjectsMeetingsActivity) getActivity();
+//        ProfileProjectsMeetingsActivity ppma = (ProfileProjectsMeetingsActivity) getActivity();
         progressBarLayout.setVisibility(View.GONE);
         if(userProjects.size() == 0){
             noProject.setVisibility(View.VISIBLE);
@@ -225,7 +225,7 @@ public class ProjectsFragment extends Fragment {
         }
         adapter = new ProjectListAdapter(userProjects, this.getActivity(), this);
         recyclerView.setAdapter(adapter);
-        ppma.setAdapter(adapter);
+//        ppma.setAdapter(adapter);
     }
 
 
