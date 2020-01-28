@@ -1,4 +1,5 @@
 package com.example.taskmanager;
+<<<<<<< HEAD
 import com.example.taskmanager.Models.User;
 import com.example.taskmanager.Models.UserProject;
 
@@ -14,6 +15,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.*;
+=
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
