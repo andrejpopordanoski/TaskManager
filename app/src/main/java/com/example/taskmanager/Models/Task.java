@@ -88,7 +88,7 @@ public class Task implements Parcelable {
     @Override
     public boolean equals(@Nullable Object obj) {
         Task other = (Task) obj;
-        return this.projectID.equals(other.projectID) && this.name.equals(other.name)  && this.description.equals(other.description) && this.getDateFormatted().equals(other.getDateFormatted());
+        return this.projectID.equals(other.projectID) && this.name.equals(other.name)  && this.description.equals(other.description);
     }
 
     public void changeState(){

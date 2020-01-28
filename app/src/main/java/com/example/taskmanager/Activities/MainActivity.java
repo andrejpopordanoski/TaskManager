@@ -100,11 +100,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         if(phone.length() == 0){
             registerPhoneText.setError("Phone must not be empty");
+            return;
         }
-        else {
+        if(phone.length() != 9){
+            registerPhoneText.setError("Phone number should be a 9 digit number");
 
-            phoneOK = true;
         }
+        try {
+            Integer.parseInt(phone);
+        }
+        catch (Exception e){
+            registerPhoneText.setError("Phone number should be a 9 digit number");
+
+            return;
+        }
+
+        phoneOK = true;
+
         if(address.length() == 0){
             registerAddressText.setError("Address must not be empty");
         }
@@ -119,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()){
-                        Toast.makeText(MainActivity.this, "Registered sucessfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Registered successfully", Toast.LENGTH_SHORT).show();
                         registerProgressBar.setVisibility(View.INVISIBLE);
 
                         Log.i(TAG, "hello world yes>");

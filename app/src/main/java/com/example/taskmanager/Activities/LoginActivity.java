@@ -19,6 +19,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import io.reactivex.observers.TestObserver;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private  String TAG = "LoginActivity";
@@ -53,6 +55,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
     }
+
+    public static TestObserver<AuthResult> createUserWithEmailAndPassword(FirebaseAuth firebaseAuth, String email, String password){
+
+        return null;
+    }
+
+
+
 
     public void logUserToApp() {
         String email = loginEmailText.getText().toString().trim();
